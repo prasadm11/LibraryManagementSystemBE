@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dmg6PSTFusI=",
+  "success": true,
+  "projectFilePath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
+  "expectedPackageFiles": [
+    "/Users/prasad/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.5/microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}
