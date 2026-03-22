@@ -14,7 +14,6 @@ public static class ApplicationServiceRegistration
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddAutoMapper(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly())); 
         
-        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }

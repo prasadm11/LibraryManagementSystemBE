@@ -1,3 +1,4 @@
+using LibraryManagementSystem.API.Middleware;
 using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Core;
 using LibraryManagementSystem.Infrastructure;
@@ -45,6 +46,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
@@ -54,7 +56,8 @@ var app = builder.Build();
 // }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();  // ← was missing
+app.UseAuthorization(); 
 app.MapControllers();
 
 app.Run();
