@@ -1,11 +1,13 @@
 using LibraryManagementSystem.Application.Features.Users.Commands;
 using LibraryManagementSystem.Application.Features.Users.DTOS;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.API.Controllers;
 
 [ApiController]
+[Authorize(Roles = "Admin")]
 [Route("api/[controller]/[action]")]
 public class UserController : ControllerBase
 {
