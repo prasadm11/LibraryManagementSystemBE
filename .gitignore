@@ -55,3 +55,5 @@ nunit-*.xml.idea/
 .vs/
 *.user
 .idea/
+bin/
+obj/
