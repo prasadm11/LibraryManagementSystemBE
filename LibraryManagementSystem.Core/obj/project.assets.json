@@ -64,11 +64,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
+      "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
       "projectName": "LibraryManagementSystem.Core",
-      "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
+      "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
       "packagesPath": "/Users/prasad/.nuget/packages/",
-      "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/obj/",
+      "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/prasad/.nuget/NuGet/NuGet.Config"

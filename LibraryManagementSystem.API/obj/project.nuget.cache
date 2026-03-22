@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aOvMqLSwBrw=",
+  "dgSpecHash": "9iwxjn2PXg7SUwiV279zHu7lnGKgKngD643rO2ler61bwfDAYkP28YVdnRet409P2mq4N4BfSwMXRBm15RteBg==",
   "success": true,
-  "projectFilePath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
+  "projectFilePath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
   "expectedPackageFiles": [
     "/Users/prasad/.nuget/packages/automapper/16.1.1/automapper.16.1.1.nupkg.sha512",
     "/Users/prasad/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "clyvD5wrdKs=",
+  "dgSpecHash": "CW7Qepkr9O3LgkwO1j8vXxUUczCx4XHXChgZbzAnlPvUwjC6PPNs8ikbFdkFadZ1flHQWcqPvnJF/X10ydPvZg==",
   "success": true,
-  "projectFilePath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
+  "projectFilePath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
   "expectedPackageFiles": [
     "/Users/prasad/.nuget/packages/automapper/16.1.1/automapper.16.1.1.nupkg.sha512",
     "/Users/prasad/.nuget/packages/mediatr/14.1.0/mediatr.14.1.0.nupkg.sha512",

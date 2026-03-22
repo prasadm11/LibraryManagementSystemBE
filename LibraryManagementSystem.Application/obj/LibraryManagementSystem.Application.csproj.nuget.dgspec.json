@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {}
+    "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {}
   },
   "projects": {
-    "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {
+    "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
+        "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
         "projectName": "LibraryManagementSystem.Application",
-        "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
+        "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj",
         "packagesPath": "/Users/prasad/.nuget/packages/",
-        "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/obj/",
+        "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/prasad/.nuget/NuGet/NuGet.Config"
@@ -26,11 +26,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
-                "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
+              "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
+                "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
               },
-              "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
-                "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj"
+              "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
+                "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj"
               }
             }
           }
@@ -39,11 +39,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -83,14 +78,14 @@
         }
       }
     },
-    "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
+    "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
+        "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
         "projectName": "LibraryManagementSystem.Core",
-        "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
+        "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj",
         "packagesPath": "/Users/prasad/.nuget/packages/",
-        "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/obj/",
+        "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/prasad/.nuget/NuGet/NuGet.Config"
@@ -111,11 +106,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -147,14 +137,14 @@
         }
       }
     },
-    "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
+    "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
+        "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
         "projectName": "LibraryManagementSystem.Infrastructure",
-        "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
+        "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
         "packagesPath": "/Users/prasad/.nuget/packages/",
-        "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/obj/",
+        "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/prasad/.nuget/NuGet/NuGet.Config"
@@ -169,8 +159,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
-                "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
+              "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
+                "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
               }
             }
           }
@@ -179,11 +169,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {

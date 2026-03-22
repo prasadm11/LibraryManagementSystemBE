@@ -2893,11 +2893,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
+      "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
       "projectName": "LibraryManagementSystem.Infrastructure",
-      "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
+      "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj",
       "packagesPath": "/Users/prasad/.nuget/packages/",
-      "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/obj/",
+      "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/prasad/.nuget/NuGet/NuGet.Config"
@@ -2912,8 +2912,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
-              "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
+            "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
+              "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
             }
           }
         }

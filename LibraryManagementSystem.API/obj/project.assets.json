@@ -3582,11 +3582,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
+      "projectUniqueName": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
       "projectName": "LibraryManagementSystem.API",
-      "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
+      "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.API/LibraryManagementSystem.API.csproj",
       "packagesPath": "/Users/prasad/.nuget/packages/",
-      "outputPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.API/obj/",
+      "outputPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/prasad/.nuget/NuGet/NuGet.Config"
@@ -3601,14 +3601,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {
-              "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj"
+            "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj": {
+              "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Application/LibraryManagementSystem.Application.csproj"
             },
-            "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
-              "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
+            "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj": {
+              "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Core/LibraryManagementSystem.Core.csproj"
             },
-            "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
-              "projectPath": "/Users/prasad/RiderProjects/LMSBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj"
+            "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj": {
+              "projectPath": "/Users/prasad/RiderProjects/LibraryManagementSystemBE/LibraryManagementSystem.Infrastructure/LibraryManagementSystem.Infrastructure.csproj"
             }
           }
         }

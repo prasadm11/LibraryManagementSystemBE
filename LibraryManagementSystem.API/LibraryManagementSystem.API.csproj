@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -22,6 +23,12 @@
       <ProjectReference Include="..\LibraryManagementSystem.Application\LibraryManagementSystem.Application.csproj" />
       <ProjectReference Include="..\LibraryManagementSystem.Core\LibraryManagementSystem.Core.csproj" />
       <ProjectReference Include="..\LibraryManagementSystem.Infrastructure\LibraryManagementSystem.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
