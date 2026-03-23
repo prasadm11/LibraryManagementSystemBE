@@ -53,7 +53,7 @@ public class ExceptionMiddleware
     private static async Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
         context.Response.ContentType = "application/json";
-
+    
         var response = ex switch
         {
             KeyNotFoundException => new ErrorResponse
@@ -78,14 +78,14 @@ public class ExceptionMiddleware
                 Details = ex.Message
             }
         };
-
+    
         context.Response.StatusCode = response.StatusCode;
-
+    
         var json = JsonSerializer.Serialize(response, new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
-
+    
         await context.Response.WriteAsync(json);
     }
 
