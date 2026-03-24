@@ -3,6 +3,7 @@ using LibraryManagementSystem.Application.Features.Book.Commands;
 using LibraryManagementSystem.Application.Features.Book.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -27,8 +28,8 @@ public class BooksController : ControllerBase
         return Ok(response);
 
     }
+    
     [HttpGet("{id}")]
-
     public async Task<IActionResult> GetBookById(int id)
     {
         var response = await _mediator.Send(new GetBookByIdQuery(id));
@@ -36,6 +37,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddBook([FromBody] AddBookDto addBookDto)
     {
         var book =await _mediator.Send(new AddBookCommand(addBookDto));
@@ -43,6 +45,7 @@ public class BooksController : ControllerBase
     }
     
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateBook([FromBody] UpdateBookDto updateBookDto)
     {
         var result = await _mediator.Send(new UpdateBookCommand(updateBookDto));
@@ -50,6 +53,7 @@ public class BooksController : ControllerBase
     }
     
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteBook(int id)
     {
         var result = await _mediator.Send(new DeleteBookCommand(id));
