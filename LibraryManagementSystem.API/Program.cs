@@ -52,7 +52,11 @@ app.UseMiddleware<ExceptionMiddleware>();
 // if (app.Environment.IsDevelopment())
 // {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API V1");
+        c.RoutePrefix = string.Empty; // makes Swagger open at root "/"
+    });
 // }
 
 app.UseHttpsRedirection();
