@@ -48,15 +48,15 @@ namespace LibraryManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("PublishedYear")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("TotalCopies")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
