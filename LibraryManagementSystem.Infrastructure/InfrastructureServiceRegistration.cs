@@ -25,6 +25,7 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<IBorrowRepository, BorrowRepository>();
         
         // JWT
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -8,6 +8,6 @@ public class UpdateBookDto
     public string ISBN { get; set; }
     public string Genre { get; set; }
     public int PublishedYear { get; set; }
+    public int TotalCopies { get; set; }
     public int AvailableCopies { get; set; }
-    public bool IsAvailable { get; set; }
 }
