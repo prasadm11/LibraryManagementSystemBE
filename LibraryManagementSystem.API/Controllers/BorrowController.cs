@@ -31,22 +31,22 @@ public class BorrowController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> GetBooksByStatus(GetBookBorrowStatusRequestDto getBookBorrowStatusRequestDto)
+    [HttpGet]
+    public async Task<IActionResult> GetBooksByStatus([FromQuery] GetBookBorrowStatusRequestDto getBookBorrowStatusRequestDto)
     {
         var result = await _mediator.Send(new GetBookbyStatusQuery(getBookBorrowStatusRequestDto));
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> GetUserBorrowHistory(GetUserBorrowHistoryRequestDto getUserBorrowHistoryRequestDto)
+    [HttpGet]
+    public async Task<IActionResult> GetUserBorrowHistory([FromQuery] GetUserBorrowHistoryRequestDto getUserBorrowHistoryRequestDto)
     {
         var result = await _mediator.Send(new GetUserBorrowHistoryQuery (getUserBorrowHistoryRequestDto));
         return Ok(result);
     }
     
-    [HttpPost]
-    public async Task<IActionResult> GetOverdueBooksResponseDto()
+    [HttpGet]
+    public async Task<IActionResult> GetOverdueBooks()
     {
         var result = await _mediator.Send(new GetOverdueBooksQuery());
         return Ok(result);
@@ -59,14 +59,14 @@ public class BorrowController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> SearchBooks(SearchBooksRequestDto searchBooksRequestDto)
+    [HttpGet]
+    public async Task<IActionResult> SearchBooks([FromQuery] SearchBooksRequestDto searchBooksRequestDto)
     {
         var result = await _mediator.Send(new SearchBooksQuery(searchBooksRequestDto));
         return Ok(result);
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> GetBorrowSummary()
     {
         var result = await _mediator.Send(new GetBorrowSummaryQuery());
