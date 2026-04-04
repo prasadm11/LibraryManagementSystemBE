@@ -38,4 +38,18 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        var result = await _mediator.Send(new DeleteUserCommand(id));
+        return Ok(new { Message = result });
+    }
+    
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto updateUserDto)
+    {
+        var result = await _mediator.Send(new UpdateUserCommand(updateUserDto));
+        return Ok(new { Message = result });
+    }
 }
