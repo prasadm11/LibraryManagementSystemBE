@@ -71,6 +71,11 @@ public class ExceptionMiddleware
                 StatusCode = (int)HttpStatusCode.BadRequest,
                 Message = ex.Message
             },
+            InvalidOperationException => new ErrorResponse
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = ex.Message
+            },
             _ => new ErrorResponse
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError,

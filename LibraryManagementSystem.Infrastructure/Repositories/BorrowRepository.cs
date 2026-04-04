@@ -76,4 +76,25 @@ public class BorrowRepository : IBorrowRepository
         var response = await _dbContext.BorrowRecords.ToListAsync();
         return response;
     }
+    
+    public async Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId)
+    {
+        var response = await _dbContext.BorrowRecords
+            .Where(x => x.UserId == userId)
+            .ToListAsync();
+        return response;
+    }
+
+    public async Task<List<BorrowRecord>> GetDueSoonBooksAsync(int days)
+    {
+        var today = DateTime.UtcNow.Date;
+        var targetDate = today.AddDays(days);
+        var response = await _dbContext.BorrowRecords
+            .Where(x => x.ReturnedAt == null && x.DueDate.Date >= today && x.DueDate.Date <= targetDate)
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .ToListAsync();
+        return response;
+    }
+
 }

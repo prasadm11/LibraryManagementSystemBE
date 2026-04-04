@@ -72,4 +72,26 @@ public class BorrowController : ControllerBase
         var result = await _mediator.Send(new GetBorrowSummaryQuery());
         return Ok(result);
     }
+    
+    
+    [HttpGet]
+    public async Task<IActionResult> CheckBorrowEligibility([FromQuery] BorrowEligibilityRequestDto  borrowEligibilityRequestDto)
+    {
+        var result = await _mediator.Send(new CheckBorrowEligibilityQuery(borrowEligibilityRequestDto));
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> PayFine([FromBody] PayFineRequestDto payFineRequestDto)
+    {
+        var result = await _mediator.Send(new PayFineCommand(payFineRequestDto));
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetDueBookSoon([FromQuery] int days = 2)
+    {
+        var result = await _mediator.Send(new GetDueSoonBooksQuery(days));
+        return Ok(result);
+    }
 }

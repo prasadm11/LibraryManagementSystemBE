@@ -19,4 +19,8 @@ public interface IBorrowRepository
     Task<List<Book>> SearchBooksAsync(string keyword);
     
     Task<List<BorrowRecord>> GetAllAsync();
+
+    Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId);
+    
+    Task<List<BorrowRecord>> GetDueSoonBooksAsync(int days);
 }
