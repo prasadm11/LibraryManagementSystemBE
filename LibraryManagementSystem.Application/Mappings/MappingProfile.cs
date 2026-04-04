@@ -24,7 +24,20 @@ public class MappingProfile : Profile
         CreateMap<BorrowRecord, BorrowBookResponseDto>()
             .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
-
+        
+        //Return Book
+        CreateMap<BorrowRecord, ReturnBookResponseDto>()
+            .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        
+        //Get Books By Status
+        // Get Borrow By Status
+        CreateMap<BorrowRecord, GetBookBorrowStatusResponseDto>()
+            .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
     }
 
 }

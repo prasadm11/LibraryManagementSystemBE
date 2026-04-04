@@ -23,4 +23,18 @@ public class BorrowController : ControllerBase
         var result = await _mediator.Send(new BorrowBookCommand(borrowBookRequestDto));
         return Ok(result);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> ReturnBook([FromBody] ReturnBookRequestDto returnBookRequestDto)
+    {
+        var result = await _mediator.Send(new ReturnBookCommand(returnBookRequestDto));
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GetBooksByStatus(GetBookBorrowStatusRequestDto getBookBorrowStatusRequestDto)
+    {
+        var result = await _mediator.Send(new GetBookbyStatusQuery(getBookBorrowStatusRequestDto));
+        return Ok(result);
+    }
 }

@@ -60,7 +60,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 // }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();  // ← was missing
+app.UseAuthentication();  
 app.UseAuthorization(); 
 app.MapControllers();
 
