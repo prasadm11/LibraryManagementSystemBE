@@ -37,4 +37,39 @@ public class BorrowController : ControllerBase
         var result = await _mediator.Send(new GetBookbyStatusQuery(getBookBorrowStatusRequestDto));
         return Ok(result);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> GetUserBorrowHistory(GetUserBorrowHistoryRequestDto getUserBorrowHistoryRequestDto)
+    {
+        var result = await _mediator.Send(new GetUserBorrowHistoryQuery (getUserBorrowHistoryRequestDto));
+        return Ok(result);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> GetOverdueBooksResponseDto()
+    {
+        var result = await _mediator.Send(new GetOverdueBooksQuery());
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RenewBook(RenewBookRequestDto renewBookRequestDto)
+    {
+        var result = await _mediator.Send(new RenewBookCommand(renewBookRequestDto));
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SearchBooks(SearchBooksRequestDto searchBooksRequestDto)
+    {
+        var result = await _mediator.Send(new SearchBooksQuery(searchBooksRequestDto));
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GetBorrowSummary()
+    {
+        var result = await _mediator.Send(new GetBorrowSummaryQuery());
+        return Ok(result);
+    }
 }

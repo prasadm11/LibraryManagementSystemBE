@@ -11,4 +11,12 @@ public interface IBorrowRepository
     //Return Book -> first get that borrow info then update that returned record in DB
     Task<BorrowRecord?> GetByIdAsync(int id);
     Task UpdateAsync(BorrowRecord borrow);
+    
+    Task<List<BorrowRecord>> GetByUserIdAsync(int userId);
+    
+    Task<List<BorrowRecord>> GetOverdueBooksAsync();
+    
+    Task<List<Book>> SearchBooksAsync(string keyword);
+    
+    Task<List<BorrowRecord>> GetAllAsync();
 }

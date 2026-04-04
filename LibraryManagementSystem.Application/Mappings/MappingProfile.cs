@@ -38,6 +38,28 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
             .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        
+        //User Borrow History
+        CreateMap<BorrowRecord, GetUserBorrowHistoryResponseDto>()
+            .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        
+        //Overdue Books
+        CreateMap<BorrowRecord, GetOverdueBooksResponseDto>()
+            .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
+            .ForMember(dest => dest.DaysLate, opt => opt.Ignore())
+            .ForMember(dest => dest.FineAmount, opt => opt.Ignore());
+        
+        // Renew Book
+        CreateMap<BorrowRecord, RenewBookResponseDto>()
+            .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.NewDueDate, opt => opt.MapFrom(src => src.DueDate));
     }
 
 }

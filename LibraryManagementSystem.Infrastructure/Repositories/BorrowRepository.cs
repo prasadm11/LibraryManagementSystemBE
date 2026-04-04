@@ -43,4 +43,37 @@ public class BorrowRepository : IBorrowRepository
         _dbContext.BorrowRecords.Update(borrow);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<BorrowRecord>> GetByUserIdAsync(int userId)
+    {
+        var response = await _dbContext.BorrowRecords
+            .Where(x => x.UserId == userId)
+            .Include(x => x.Book)
+            .ToListAsync();
+        return response;
+    }
+
+    public async Task<List<BorrowRecord>> GetOverdueBooksAsync()
+    {
+        var response = await _dbContext.BorrowRecords
+            .Where(x => x.ReturnedAt == null && x.DueDate < DateTime.UtcNow)
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .ToListAsync();
+        return response;
+    }
+
+    public async Task<List<Book>> SearchBooksAsync(string keyword)
+    {
+        var response = await _dbContext.Books
+            .Where(x => x.Title.ToLower().Contains(keyword.ToLower()) || x.Author.ToLower().Contains(keyword.ToLower()))
+            .ToListAsync();
+        return response;
+    }
+
+    public async Task<List<BorrowRecord>> GetAllAsync()
+    {
+        var response = await _dbContext.BorrowRecords.ToListAsync();
+        return response;
+    }
 }
