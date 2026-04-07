@@ -44,6 +44,20 @@ builder.Services.AddApplicationServices();
 builder.Services.AddCoreServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+//Adding CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
@@ -60,6 +74,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 // }
 
 app.UseHttpsRedirection();
+app.UseCors("FrontendPolicy");
 app.UseAuthentication();  
 app.UseAuthorization(); 
 app.MapControllers();
