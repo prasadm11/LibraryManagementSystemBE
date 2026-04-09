@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:5173",
-                "https://librarymanagementsystembe.onrender.com"
+                "https://lmspm.netlify.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
