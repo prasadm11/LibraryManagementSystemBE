@@ -14,7 +14,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LibraryManagementSystem.Core\LibraryManagementSystem.Core.csproj" />
-      <ProjectReference Include="..\LibraryManagementSystem.Infrastructure\LibraryManagementSystem.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

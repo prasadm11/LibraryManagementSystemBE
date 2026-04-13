@@ -23,6 +23,7 @@ public static class InfrastructureServiceRegistration
             options.UseNpgsql(configuration.GetConnectionString("PostgreSQLConnection")));
         
         services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IBorrowRepository, BorrowRepository>();
