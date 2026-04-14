@@ -1,6 +1,7 @@
 using AutoMapper;
 using LibraryManagementSystem.Application.Features.Book.DTOs;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
+using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 using LibraryManagementSystem.Application.Features.Users.DTOS;
 using LibraryManagementSystem.Core.Entities;
 
@@ -60,6 +61,12 @@ public class MappingProfile : Profile
         CreateMap<BorrowRecord, RenewBookResponseDto>()
             .ForMember(dest => dest.BorrowId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.NewDueDate, opt => opt.MapFrom(src => src.DueDate));
+        
+        // Borrow Request
+        CreateMap<BorrowRecordsUserRequest, GetAllPendingBorrowRequestsResponseDto>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        
     }
 
 }
