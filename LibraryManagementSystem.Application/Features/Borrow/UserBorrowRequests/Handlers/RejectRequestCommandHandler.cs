@@ -5,24 +5,26 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class RejectBorrowRequestCommandHandler  : IRequestHandler<RejectBorrowRequestCommand, string>
+public class RejectRequestCommandHandler  : IRequestHandler<RejectRequestCommand, string>
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
 
-    public RejectBorrowRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository)
+    public RejectRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository)
     {
         _borrowRequestRepository = borrowRequestRepository;
     }
 
-    public async Task<string> Handle(RejectBorrowRequestCommand command, CancellationToken cancellationToken)
+    public async Task<string> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
     {
-        var request = await _borrowRequestRepository.GetByIdAsync(command.BorrowRequestId);
+        var request = await _borrowRequestRepository.GetByIdAsync(command.id);
         
         if (request == null)
             throw new KeyNotFoundException("Request not found");
         
         if (request.Status != BorrowRequestStatus.Pending)
             throw new Exception("Request already processed");
+        
+        //Handler
         
         request.Status = BorrowRequestStatus.Rejected;
         request.ApprovedAt = DateTime.UtcNow;
