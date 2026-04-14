@@ -2,13 +2,14 @@ using AutoMapper;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Commands;
+using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand , string>
+public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand , ApproveRequestResponseDto>
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
@@ -23,7 +24,7 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     }
     
 
-    public async Task<string> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
+    public async Task<ApproveRequestResponseDto> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
     {
         var request = await _borrowRequestRepository.GetByIdAsync(command.id);
 
@@ -78,8 +79,13 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
         request.ApprovedAt = DateTime.UtcNow;
         
         await _borrowRequestRepository.UpdateAsync(request);
-        
-        return "Request approved successfully";
+
+        var response = new ApproveRequestResponseDto
+        {
+            Message = "Request approved successfully"
+        };
+        return response;
+
     }
     
 }
