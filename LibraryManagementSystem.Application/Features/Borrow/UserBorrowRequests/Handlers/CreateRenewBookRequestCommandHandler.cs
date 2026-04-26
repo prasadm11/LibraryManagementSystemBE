@@ -28,6 +28,11 @@ public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewB
         
         if (borrow.Status != BorrowStatus.Active)
             throw new Exception("Only active borrowed books can be renewed");
+        
+        if (borrow.DueDate < DateTime.UtcNow)
+        {
+            throw new Exception("Cannot renew overdue book");
+        }
 
         var request = new BorrowRecordsUserRequest
         {

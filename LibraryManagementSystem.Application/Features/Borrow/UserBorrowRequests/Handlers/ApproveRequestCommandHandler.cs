@@ -14,12 +14,14 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
     private readonly IBorrowRequestRepository _borrowRequestRepository;
+    private readonly IBorrowRepository _borrowRepository;
 
-    public ApproveRequestCommandHandler(IMapper mapper, IBorrowRequestRepository borrowRequestRepository, IMediator mediator)
+    public ApproveRequestCommandHandler(IMapper mapper, IBorrowRequestRepository borrowRequestRepository, IMediator mediator,IBorrowRepository borrowRepository)
     {
         _mapper = mapper;
         _borrowRequestRepository = borrowRequestRepository;
         _mediator = mediator;
+        _borrowRepository = borrowRepository;
         
     }
     
@@ -27,6 +29,7 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     public async Task<ApproveRequestResponseDto> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
     {
         var request = await _borrowRequestRepository.GetByIdAsync(command.id);
+        var borrow = await _borrowRepository.GetByIdAsync(request.BorrowRecordId.Value);
 
         if (request == null)
         {
@@ -36,6 +39,10 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
         if (request.Status != BorrowRequestStatus.Pending)
         {
             throw new Exception("Request already processed");
+        }
+        if (borrow.FineAmount > 0 && !borrow.FinePaid)
+        {
+            throw new Exception("Fine must be paid before approving return");
         }
         //Handle the approve request according to the type like borrow,return,renew
 

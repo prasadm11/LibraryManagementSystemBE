@@ -29,6 +29,20 @@ public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateRetur
         
         if (borrow.Status == BorrowStatus.Returned || borrow.Status == BorrowStatus.ReturnedLate)
             throw new Exception("Book already returned");
+        
+        //check and calculate the fine
+        if (borrow.DueDate < DateTime.UtcNow)
+        {
+            var lateDays = (DateTime.UtcNow - borrow.DueDate).Days;
+            if (lateDays < 1)
+            {
+                lateDays = 1;
+            }
+
+            borrow.FineAmount = lateDays * 20;
+            borrow.FinePaid = false;
+            await _borrowRepository.UpdateAsync(borrow);
+        }
 
         
         var result = new BorrowRecordsUserRequest
