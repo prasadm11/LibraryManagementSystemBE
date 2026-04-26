@@ -1,11 +1,10 @@
 using Hangfire;
 using Hangfire.PostgreSql;
+using LibraryManagementSystem.API.Hangfire;
 using LibraryManagementSystem.API.Middleware;
 using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Core;
-using LibraryManagementSystem.Core.Interfaces.Services;
 using LibraryManagementSystem.Infrastructure;
-using LibraryManagementSystem.Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -90,12 +89,6 @@ app.UseHangfireDashboard("/hangfire");
 app.UseAuthentication();  
 app.UseAuthorization(); 
 app.MapControllers();
-
-
-RecurringJob.AddOrUpdate<INotificationService>(
-    "overdue-email-job",
-    x => x.SendOverdueEmails(),
-    Cron.Daily
-);
+HangfireJobScheduler.RegisterJobs();
 
 app.Run();

@@ -21,14 +21,47 @@ public class NotificationService : INotificationService
         foreach (var item in overdueBooks)
         {
             var subject = "Overdue Books Reminder!";
-            var body = $@"Hello {item.FirstName} {item.LastName},
-                        The book '{item.BookTitle}' is overdue.
-                        Due Date: {item.DueDate:dd-MM-yyyy}
-                        Please return it as soon as possible.
-                        Thank you,
-                        Library Team";
+            var body = $@"
+                <h2>📚 Library Reminder</h2>
+                <p>Hello {item.FirstName},</p>
+
+                <p>Your book <b>{item.BookTitle}</b> is overdue.</p>
+
+                <p><b>Due Date:</b> {item.DueDate:dd-MM-yyyy}</p>
+
+                <p style='color:red;'>Please return it to avoid penalties.</p>
+
+                <hr/>
+                <p>Library Management System</p>
+                ";
             await _emailService.SendEmailAsync(item.Email, subject, body);
         }
         
+    }
+    
+    public async Task SendDueSoonEmails()
+    {
+
+        var dueSoonBooks = await _mediator.Send(new GetDueSoonBooksQuery(2));
+
+        if (dueSoonBooks == null || !dueSoonBooks.Any())
+            return;
+
+        foreach (var item in dueSoonBooks)
+        {
+            var subject = "📚 Book Due Soon Reminder";
+
+            var body = $@"
+<h3>Reminder</h3>
+<p>Hello {item.FirstName},</p>
+
+<p>Your book <b>{item.BookTitle}</b> is due on 
+<b>{item.DueDate:dd-MM-yyyy}</b>.</p>
+
+<p>Please return it on time to avoid penalties.</p>
+";
+
+            await _emailService.SendEmailAsync(item.Email, subject, body);
+        }
     }
 }
