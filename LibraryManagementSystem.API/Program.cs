@@ -1,7 +1,11 @@
+using Hangfire;
+using Hangfire.PostgreSql;
 using LibraryManagementSystem.API.Middleware;
 using LibraryManagementSystem.Application;
 using LibraryManagementSystem.Core;
+using LibraryManagementSystem.Core.Interfaces.Services;
 using LibraryManagementSystem.Infrastructure;
+using LibraryManagementSystem.Infrastructure.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,10 +43,16 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+//Hangfire
+builder.Services.AddHangfire(config =>
+    config.UsePostgreSqlStorage( builder.Configuration.GetConnectionString("PostgreSQLConnection"))
+);
+
 //service layer registration
 builder.Services.AddApplicationServices();
 builder.Services.AddCoreServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddHangfireServer();
 
 //Adding CORS
 builder.Services.AddCors(options =>
@@ -76,8 +86,16 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseCors("FrontendPolicy");
+app.UseHangfireDashboard("/hangfire");
 app.UseAuthentication();  
 app.UseAuthorization(); 
 app.MapControllers();
+
+
+RecurringJob.AddOrUpdate<INotificationService>(
+    "overdue-email-job",
+    x => x.SendOverdueEmails(),
+    Cron.Daily
+);
 
 app.Run();
