@@ -13,5 +13,5 @@ public class GetAllUsersResponseDto
     public string LastName { get; set; }
     public string City { get; set; }
     public string PhoneNumber { get; set; }
-    public bool isactive { get; set; }
+    public bool IsActive { get; set; }
 }
