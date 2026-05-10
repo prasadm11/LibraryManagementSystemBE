@@ -20,4 +20,5 @@ public class HangfireJobScheduler
             Cron.Minutely
         );
     }
+    
 }
