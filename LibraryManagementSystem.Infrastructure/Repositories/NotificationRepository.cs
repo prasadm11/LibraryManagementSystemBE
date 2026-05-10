@@ -1,10 +1,11 @@
 using LibraryManagementSystem.Core.Entities;
+using LibraryManagementSystem.Core.Interfaces.Repositories;
 using LibraryManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Infrastructure.Repositories;
 
-public class NotificationRepository
+public class NotificationRepository : INotificationRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
