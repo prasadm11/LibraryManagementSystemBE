@@ -12,10 +12,11 @@ public class NotificationService : INotificationService
     private readonly IMediator _mediator;
     private readonly INotificationRepository _notificationRepository;
 
-    public NotificationService(IEmailService emailService , IMediator mediator)
+    public NotificationService(IEmailService emailService , IMediator mediator,INotificationRepository notificationRepository)
     {
         _emailService = emailService;
         _mediator = mediator;
+        _notificationRepository = notificationRepository;
     }
 
     public async Task SendOverdueEmails()
@@ -67,14 +68,14 @@ public class NotificationService : INotificationService
             var subject = "📚 Book Due Soon Reminder";
 
             var body = $@"
-<h3>Reminder</h3>
-<p>Hello {item.FirstName},</p>
+                <h3>Reminder</h3>
+                <p>Hello {item.FirstName},</p>
 
-<p>Your book <b>{item.BookTitle}</b> is due on 
-<b>{item.DueDate:dd-MM-yyyy}</b>.</p>
+                <p>Your book <b>{item.BookTitle}</b> is due on 
+                <b>{item.DueDate:dd-MM-yyyy}</b>.</p>
 
-<p>Please return it on time to avoid penalties.</p>
-";
+                <p>Please return it on time to avoid penalties.</p>
+                ";
 
             await _emailService.SendEmailAsync(item.Email, subject, body);
             

@@ -29,6 +29,7 @@ public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery 
             BookTitle = x.Book.Title,
             UserId = x.UserId,
             UserName = x.User.FirstName + " " + x.User.LastName,
+            Email =  x.User.Email,
             DueDate = x.DueDate,
             DaysRemaining = (x.DueDate.Date - today).Days
         }).ToList();
