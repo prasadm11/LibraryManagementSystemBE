@@ -1,4 +1,6 @@
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
+using LibraryManagementSystem.Core.Entities;
+using LibraryManagementSystem.Core.Interfaces.Repositories;
 using LibraryManagementSystem.Core.Interfaces.Services;
 using MediatR;
 
@@ -8,6 +10,7 @@ public class NotificationService : INotificationService
 {
     private readonly IEmailService _emailService;
     private readonly IMediator _mediator;
+    private readonly INotificationRepository _notificationRepository;
 
     public NotificationService(IEmailService emailService , IMediator mediator)
     {
@@ -35,8 +38,20 @@ public class NotificationService : INotificationService
                 <p>Library Management System</p>
                 ";
             await _emailService.SendEmailAsync(item.Email, subject, body);
+            
+            //call notification and use it in UI side for rendering notification by user
+            await _notificationRepository.AddAsync(new Notification
+            {
+                UserId = item.UserId,
+                Title = "Overdue Books Reminder!",
+                Message = $"Your book '{item.BookTitle}' is overdue.",
+                Type = "Overdue",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            });
         }
         
+
     }
     
     public async Task SendDueSoonEmails()
@@ -62,6 +77,24 @@ public class NotificationService : INotificationService
 ";
 
             await _emailService.SendEmailAsync(item.Email, subject, body);
+            
+            await _notificationRepository.AddAsync(new Notification
+
+            {
+
+                UserId = item.UserId,
+
+                Title = "Book Due Soon Reminder",
+
+                Message = $"Your book '{item.BookTitle}' is due on {item.DueDate:dd-MM-yyyy}",
+
+                Type = "DueSoon",
+
+                IsRead = false,
+
+                CreatedAt = DateTime.UtcNow
+
+            });
         }
     }
 }
