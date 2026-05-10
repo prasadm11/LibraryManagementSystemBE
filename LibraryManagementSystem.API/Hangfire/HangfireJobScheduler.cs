@@ -12,12 +12,12 @@ public class HangfireJobScheduler
         RecurringJob.AddOrUpdate<INotificationService>(
             "overdue-email-job",
             x => x.SendOverdueEmails(),
-            Cron.Minutely
+            Cron.Daily
         );
         RecurringJob.AddOrUpdate<INotificationService>(
             "due-soon-email-job",
             x => x.SendDueSoonEmails(),
-            Cron.Minutely
+            Cron.Daily
         );
     }
     
