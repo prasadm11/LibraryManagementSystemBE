@@ -10,4 +10,5 @@ public class UpdateBookDto
     public int PublishedYear { get; set; }
     public int TotalCopies { get; set; }
     public int AvailableCopies { get; set; }
+    public string? ImageUrl { get; set; }
 }

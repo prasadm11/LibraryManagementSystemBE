@@ -21,4 +21,6 @@ public class User
     //  Metadata
     public DateTime CreatedAt { get; set; }
     public bool IsActive { get; set; }
+    
+    public string? ProfileImageUrl { get; set; }
 }

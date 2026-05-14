@@ -13,4 +13,5 @@ public class UpdateUserDto
     // Optional updates
     public string? Email { get; set; }
     public string? Username { get; set; }
+    public string? ProfileImageUrl { get; set; }
 }

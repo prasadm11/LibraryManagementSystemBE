@@ -11,4 +11,5 @@ public class Book
     public int TotalCopies { get; set; }
     public int AvailableCopies { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? ImageUrl { get; set; }
 }

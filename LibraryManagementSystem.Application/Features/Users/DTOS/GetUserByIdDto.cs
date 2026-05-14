@@ -14,4 +14,5 @@ public class GetUserByIdDto
     public string City { get; set; }
     public string PhoneNumber { get; set; }
     public bool IsActive { get; set; }
+    public string? ProfileImageUrl { get; set; }
 }
