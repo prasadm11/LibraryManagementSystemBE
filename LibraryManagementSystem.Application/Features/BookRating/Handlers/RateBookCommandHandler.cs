@@ -24,19 +24,29 @@ public class RateBookCommandHandler : IRequestHandler<RateBookCommand, RateBookR
 
         if (!hasReturnedBook)
         {
-            throw new Exception("You can rate only returned books");
+            return new RateBookResponseDto
+            {
+                Message = "You can rate only returned books"
+            };
         }
 
         var alreadyRated = await _bookRatingRepository.HasUserRatedBook(request.UserId, request.BookId);
         
         if (alreadyRated)
         {
-            throw new Exception("You already rated this book");
+            return new RateBookResponseDto
+            {
+                Message = "You already rated this book"
+            };
         }
         
         if (request.Rating < 1 || request.Rating > 5)
         {
-            throw new Exception("Rating must be between 1 and 5");
+            return new RateBookResponseDto
+            {
+                Message = "Rating must be between 1 and 5"
+            };
+
         }
 
         var rating = new Core.Entities.BookRating
