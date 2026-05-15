@@ -97,4 +97,12 @@ public class BorrowRepository : IBorrowRepository
         return response;
     }
 
+    public async Task<bool> HasUserReturnedBook(int userId, int bookId)
+    {
+        var response = await _dbContext.BorrowRecords.AnyAsync(x =>
+            x.UserId == userId && x.BookId == bookId &&
+            (x.Status == BorrowStatus.Returned || x.Status == BorrowStatus.ReturnedLate));
+        return response;
+    }
+
 }

@@ -23,4 +23,6 @@ public interface IBorrowRepository
     Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId);
     
     Task<List<BorrowRecord>> GetDueSoonBooksAsync(int days);
+    
+    Task<bool> HasUserReturnedBook(int userId, int bookId);
 }

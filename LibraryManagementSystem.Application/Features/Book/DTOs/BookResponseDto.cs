@@ -12,4 +12,6 @@ public class BookResponseDto
     public int AvailableCopies { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? ImageUrl { get; set; }
+    public double AverageRating { get; set; }
+    public int TotalRatings { get; set; }
 }

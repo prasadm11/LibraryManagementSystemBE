@@ -15,4 +15,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<BorrowRecordsUserRequest> BorrowRecordsUserRequests { get; set; }
     
     public DbSet<Notification> Notifications { get; set; }
+    
+    public DbSet<BookRating> BookRatings { get; set; }
 }
