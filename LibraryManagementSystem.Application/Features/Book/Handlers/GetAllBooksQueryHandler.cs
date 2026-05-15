@@ -26,7 +26,7 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, List<Bo
         foreach (var bookDto in result)
         {
             var ratings = await _bookRatingRepository.GetBookRatings(bookDto.Id);
-            bookDto.AverageRating = ratings.Count;
+            bookDto.TotalRatings = ratings.Count;
             bookDto.AverageRating = ratings.Any() ? Math.Round(ratings.Average(x=>x.Rating), 2) : 0;
         }
         return result;
