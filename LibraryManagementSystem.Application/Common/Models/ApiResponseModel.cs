@@ -2,7 +2,7 @@ namespace LibraryManagementSystem.Application.Common.Models;
 
 public class ApiResponseModel<T>
 {
-    public bool Success { get; set; }
+    public bool IsSuccess { get; set; }
     public int StatusCode { get; set; }
     public string Message { get; set; } = string.Empty;
     public T? Data { get; set; }
@@ -12,7 +12,7 @@ public class ApiResponseModel<T>
     {
         return new ApiResponseModel<T>
         {
-            Success = true,
+            IsSuccess = true,
             StatusCode = statusCode,
             Message = message,
             Data = data
@@ -23,7 +23,7 @@ public class ApiResponseModel<T>
     {
         return new ApiResponseModel<T>
         {
-            Success = false,
+            IsSuccess = false,
             StatusCode = statusCode,
             Message = message,
             Errors = errors
