@@ -5,10 +5,11 @@ using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 // using LibraryManagementSystem.Infrastructure.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , ReturnBookResponseDto>
+public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , ApiResponseModel<ReturnBookResponseDto>>
 {
     private readonly IBorrowRepository _borrowRepository;
     private readonly IMapper _mapper;
@@ -19,7 +20,7 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , Retu
         _mapper = mapper;
     }
 
-    public async Task<ReturnBookResponseDto> Handle(ReturnBookCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<ReturnBookResponseDto>> Handle(ReturnBookCommand command, CancellationToken cancellationToken)
     {
         var request = command.ReturnBookRequestDto;
         
@@ -47,7 +48,7 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , Retu
         {
             var LateDays = (currentTime - borrow.DueDate).Days;
             
-            borrow.Status =  BorrowStatus.Returned;
+            borrow.Status = BorrowStatus.ReturnedLate;
             borrow.FineAmount = LateDays * 10; //10 RS per day fine
             
         }
@@ -61,7 +62,15 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , Retu
         
         await _borrowRepository.UpdateAsync(borrow);
         
-        var response = _mapper.Map<ReturnBookResponseDto>(borrow);
+        var result = _mapper.Map<ReturnBookResponseDto>(borrow);
+
+        var response = ApiResponseModel<ReturnBookResponseDto>
+            .SuccessResponse(
+                result,
+                "Book returned successfully",
+                200
+            );
+
         return response;
 
     }

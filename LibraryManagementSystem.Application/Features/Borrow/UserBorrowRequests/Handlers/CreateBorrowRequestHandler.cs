@@ -4,10 +4,11 @@ using LibraryManagementSystem.Core.Entities;
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class CreateBorrowRequestHandler : IRequestHandler<CreateBorrowRequestCommand , CreateBorrowResponseDto> 
+public class CreateBorrowRequestHandler : IRequestHandler<CreateBorrowRequestCommand , ApiResponseModel<CreateBorrowResponseDto>> 
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
@@ -18,7 +19,7 @@ public class CreateBorrowRequestHandler : IRequestHandler<CreateBorrowRequestCom
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<CreateBorrowResponseDto> Handle(CreateBorrowRequestCommand command,
+    public async Task<ApiResponseModel<CreateBorrowResponseDto>> Handle(CreateBorrowRequestCommand command,
         CancellationToken cancellationToken)
     {
         var request = command.CreateBorrowRequestDto;
@@ -71,13 +72,18 @@ public class CreateBorrowRequestHandler : IRequestHandler<CreateBorrowRequestCom
 
         await _borrowRequestRepository.AddAsync(createBorrowRequest);
 
-        var response = new CreateBorrowResponseDto
+        var result = new CreateBorrowResponseDto
         {
             Message = "Borrow request submitted successfully"
         };
-        
+
+        var response = ApiResponseModel<CreateBorrowResponseDto>
+            .SuccessResponse(
+                result,
+                "Borrow request submitted successfully",
+                200
+            );
+
         return response;
     }
 }
-
-

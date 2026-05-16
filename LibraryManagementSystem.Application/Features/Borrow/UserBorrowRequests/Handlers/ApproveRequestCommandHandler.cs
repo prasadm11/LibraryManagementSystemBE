@@ -6,10 +6,11 @@ using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTO
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand , ApproveRequestResponseDto>
+public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand , ApiResponseModel<ApproveRequestResponseDto>>
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
@@ -26,7 +27,7 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     }
     
 
-    public async Task<ApproveRequestResponseDto> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<ApproveRequestResponseDto>> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
     {
         var request = await _borrowRequestRepository.GetByIdAsync(command.id);
         var borrow = await _borrowRepository.GetByIdAsync(request.BorrowRecordId.Value);
@@ -87,10 +88,18 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
         
         await _borrowRequestRepository.UpdateAsync(request);
 
-        var response = new ApproveRequestResponseDto
+        var result = new ApproveRequestResponseDto
         {
             Message = "Request approved successfully"
         };
+
+        var response = ApiResponseModel<ApproveRequestResponseDto>
+            .SuccessResponse(
+                result,
+                "Request approved successfully",
+                200
+            );
+
         return response;
 
     }

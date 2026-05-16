@@ -3,10 +3,11 @@ using LibraryManagementSystem.Application.Features.Book.Commands;
 using LibraryManagementSystem.Application.Features.Book.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Book.Handlers;
 
-public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, List<BookResponseDto>>
+public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, ApiResponseModel<List<BookResponseDto>>>
 {
     private readonly IBookRepository _bookRepository;
     private readonly IBookRatingRepository _bookRatingRepository;
@@ -19,7 +20,7 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, List<Bo
         _mapper = mapper;
     }
 
-    public async Task<List<BookResponseDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<List<BookResponseDto>>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
         var response = await _bookRepository.GetAllBooksAsync();
         var result = _mapper.Map<List<BookResponseDto>>(response);
@@ -29,6 +30,13 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, List<Bo
             bookDto.TotalRatings = ratings.Count;
             bookDto.AverageRating = ratings.Any() ? Math.Round(ratings.Average(x=>x.Rating), 2) : 0;
         }
-        return result;
+        var responseDto = ApiResponseModel<List<BookResponseDto>>
+            .SuccessResponse(
+                result,
+                "Books fetched successfully",
+                200
+            );
+
+        return responseDto;
     }
 }

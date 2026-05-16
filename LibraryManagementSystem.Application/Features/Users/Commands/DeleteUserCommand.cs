@@ -1,5 +1,7 @@
+using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.Users.DTOS;
 using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Users.Commands;
 
-public record DeleteUserCommand(int UserId) : IRequest<string>;
+public record DeleteUserCommand(int UserId) : IRequest<ApiResponseModel<DeleteUserResponseDto>>;

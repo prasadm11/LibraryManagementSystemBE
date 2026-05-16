@@ -1,3 +1,4 @@
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
@@ -5,7 +6,7 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery , List<GetDueSoonBooksResponseDto>>
+public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery , ApiResponseModel<List<GetDueSoonBooksResponseDto>>>
 {
     private readonly IBorrowRepository _borrowRepository;
 
@@ -13,7 +14,7 @@ public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery 
     {
         _borrowRepository = borrowRepository;
     }
-    public async Task<List<GetDueSoonBooksResponseDto>> Handle(
+    public async Task<ApiResponseModel<List<GetDueSoonBooksResponseDto>>> Handle(
         GetDueSoonBooksQuery request,
         CancellationToken cancellationToken)
     {
@@ -23,7 +24,7 @@ public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery 
         var today = DateTime.UtcNow.Date;
 
         // 2. Map manually
-        var response = records.Select(x => new GetDueSoonBooksResponseDto
+        var result = records.Select(x => new GetDueSoonBooksResponseDto
         {
             BorrowId = x.Id,
             BookTitle = x.Book.Title,
@@ -33,6 +34,11 @@ public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery 
             DueDate = x.DueDate,
             DaysRemaining = (x.DueDate.Date - today).Days
         }).ToList();
+        
+        var response = ApiResponseModel<List<GetDueSoonBooksResponseDto>>.SuccessResponse(
+            result, 
+            "Due soon books fetched successfully",
+            200);
 
         return response;
     }

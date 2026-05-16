@@ -1,3 +1,5 @@
+using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Commands;
 using LibraryManagementSystem.Core.Entities;
 using LibraryManagementSystem.Core.Enums;
@@ -6,7 +8,7 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateReturnBookRequestCommand, string>
+public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateReturnBookRequestCommand, ApiResponseModel<CreateReturnBookRequestResponseDto>>
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
@@ -16,7 +18,7 @@ public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateRetur
         _borrowRequestRepository = borrowRequestRepository;
         _borrowRepository = borrowRepository;
     }
-    public async Task<string> Handle(
+    public async Task<ApiResponseModel<CreateReturnBookRequestResponseDto>> Handle(
         CreateReturnBookRequestCommand command,
         CancellationToken cancellationToken)
     {
@@ -55,7 +57,19 @@ public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateRetur
         };
 
         await _borrowRequestRepository.AddAsync(result);
+        
+        var responseDto = new CreateReturnBookRequestResponseDto
+        {
+            Message = "Return request submitted successfully"
+        };
 
-        return "Return request submitted successfully";
+        var response = ApiResponseModel<CreateReturnBookRequestResponseDto>
+            .SuccessResponse(
+                responseDto,
+                "Return request submitted successfully",
+                200
+            );
+
+        return response;
     }
 }

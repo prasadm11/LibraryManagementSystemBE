@@ -4,10 +4,11 @@ using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class RenewBookCommandHandler : IRequestHandler<RenewBookCommand, RenewBookResponseDto>
+public class RenewBookCommandHandler : IRequestHandler<RenewBookCommand, ApiResponseModel<RenewBookResponseDto>>
 {
     private readonly IMapper _mapper;
     private readonly IBorrowRepository _borrowRepository;
@@ -18,7 +19,7 @@ public class RenewBookCommandHandler : IRequestHandler<RenewBookCommand, RenewBo
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<RenewBookResponseDto> Handle(RenewBookCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<RenewBookResponseDto>> Handle(RenewBookCommand command, CancellationToken cancellationToken)
     {
         var request = command.RenewBookRequestDto;
         
@@ -42,8 +43,17 @@ public class RenewBookCommandHandler : IRequestHandler<RenewBookCommand, RenewBo
         
         await _borrowRepository.UpdateAsync(borrow);
         
-        var response = _mapper.Map<RenewBookResponseDto>(borrow);
-        response.Message = $"Book renewed successfully. Next due date is {borrow.DueDate:yyyy-MM-dd}";
+        var result = _mapper.Map<RenewBookResponseDto>(borrow);
+
+        result.Message = $"Book renewed successfully. Next due date is {borrow.DueDate:yyyy-MM-dd}";
+
+        var response = ApiResponseModel<RenewBookResponseDto>
+            .SuccessResponse(
+                result,
+                "Book renewed successfully",
+                200
+            );
+
         return response;
     }
 }

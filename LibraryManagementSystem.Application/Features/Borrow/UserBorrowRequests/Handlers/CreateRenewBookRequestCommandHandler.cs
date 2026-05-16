@@ -3,10 +3,12 @@ using LibraryManagementSystem.Core.Entities;
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewBookRequestCommand, string>
+public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewBookRequestCommand, ApiResponseModel<CreateRenewBookRequestResponseDto>>
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
@@ -17,7 +19,7 @@ public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewB
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<string> Handle(CreateRenewBookRequestCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<CreateRenewBookRequestResponseDto>> Handle(CreateRenewBookRequestCommand command, CancellationToken cancellationToken)
     {
         var borrowId = command.Dto.BorrowRecordId;
 
@@ -44,7 +46,20 @@ public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewB
             CreatedAt = DateTime.UtcNow
         };
         await _borrowRequestRepository.AddAsync(request);
-        return "Renew request submitted successfully";
+
+        var result = new CreateRenewBookRequestResponseDto
+        {
+            Message = "Renew request submitted successfully"
+        };
+
+        var response = ApiResponseModel<CreateRenewBookRequestResponseDto>
+            .SuccessResponse(
+                result,
+                "Renew request submitted successfully",
+                200
+            );
+
+        return response;
         
     }
 }

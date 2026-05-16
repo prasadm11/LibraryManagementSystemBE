@@ -2,10 +2,11 @@ using LibraryManagementSystem.Application.Features.BookRating.Commands;
 using LibraryManagementSystem.Application.Features.BookRating.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.BookRating.Handlers;
 
-public class RateBookCommandHandler : IRequestHandler<RateBookCommand, RateBookResponseDto>
+public class RateBookCommandHandler : IRequestHandler<RateBookCommand, ApiResponseModel<RateBookResponseDto>>
 {
     private readonly IBookRatingRepository _bookRatingRepository;
     private readonly IBorrowRepository _borrowRepository;
@@ -16,7 +17,7 @@ public class RateBookCommandHandler : IRequestHandler<RateBookCommand, RateBookR
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<RateBookResponseDto> Handle(RateBookCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<RateBookResponseDto>> Handle(RateBookCommand command, CancellationToken cancellationToken)
     {
         var request = command.rateBookDto;
 
@@ -24,29 +25,31 @@ public class RateBookCommandHandler : IRequestHandler<RateBookCommand, RateBookR
 
         if (!hasReturnedBook)
         {
-            return new RateBookResponseDto
-            {
-                Message = "You can rate only returned books"
-            };
+            return ApiResponseModel<RateBookResponseDto>
+                .FailureResponse(
+                    "You can rate only returned books",
+                    400
+                );
         }
 
         var alreadyRated = await _bookRatingRepository.HasUserRatedBook(request.UserId, request.BookId);
         
         if (alreadyRated)
         {
-            return new RateBookResponseDto
-            {
-                Message = "You already rated this book"
-            };
+            return ApiResponseModel<RateBookResponseDto>
+                .FailureResponse(
+                    "You already rated this book",
+                    400
+                );
         }
         
         if (request.Rating < 1 || request.Rating > 5)
         {
-            return new RateBookResponseDto
-            {
-                Message = "Rating must be between 1 and 5"
-            };
-
+            return ApiResponseModel<RateBookResponseDto>
+                .FailureResponse(
+                    "Rating must be between 1 and 5",
+                    400
+                );
         }
 
         var rating = new Core.Entities.BookRating
@@ -60,11 +63,18 @@ public class RateBookCommandHandler : IRequestHandler<RateBookCommand, RateBookR
         
         await _bookRatingRepository.AddAsync(rating);
 
-        return new RateBookResponseDto
+        var result = new RateBookResponseDto
         {
             Message = "Book rated successfully"
         };
-        // return "Book rated successfully";
 
+        var response = ApiResponseModel<RateBookResponseDto>
+            .SuccessResponse(
+                result,
+                "Book rated successfully",
+                200
+            );
+
+        return response;
     }
 }

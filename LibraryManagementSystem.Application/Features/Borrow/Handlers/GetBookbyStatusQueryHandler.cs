@@ -1,4 +1,5 @@
 using AutoMapper;
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Enums;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class GetBookbyStatusQueryHandler : IRequestHandler<GetBookbyStatusQuery , List<GetBookBorrowStatusResponseDto>>
+public class GetBookbyStatusQueryHandler : IRequestHandler<GetBookbyStatusQuery , ApiResponseModel<List<GetBookBorrowStatusResponseDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IBorrowRepository _borrowRepository;
@@ -18,7 +19,7 @@ public class GetBookbyStatusQueryHandler : IRequestHandler<GetBookbyStatusQuery 
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<List<GetBookBorrowStatusResponseDto>> Handle(GetBookbyStatusQuery query, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<List<GetBookBorrowStatusResponseDto>>> Handle(GetBookbyStatusQuery query, CancellationToken cancellationToken)
     {
         var request = query.GetBookBorrowStatusRequestDto;
 
@@ -35,7 +36,12 @@ public class GetBookbyStatusQueryHandler : IRequestHandler<GetBookbyStatusQuery 
         
         var records = await _borrowRepository.GetByStatusAsync(status);
 
-        var response = _mapper.Map<List<GetBookBorrowStatusResponseDto>>(records);
+        var result = _mapper.Map<List<GetBookBorrowStatusResponseDto>>(records);
+        
+        var response = ApiResponseModel<List<GetBookBorrowStatusResponseDto>>.SuccessResponse(
+            result, 
+            "Borrow records fetched successfully",
+            200);
 
         return response;
 

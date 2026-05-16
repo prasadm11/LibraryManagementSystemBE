@@ -1,11 +1,13 @@
 using AutoMapper;
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Book.Commands;
+using LibraryManagementSystem.Application.Features.Book.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Book.Handlers;
 
-public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand,string>
+public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand,ApiResponseModel<BookResponseDto>>
 {
     private readonly IBookRepository _bookRepository;
     private readonly IMapper _mapper;
@@ -16,7 +18,7 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand,string
         _mapper = mapper;
     }
 
-    public async Task<string> Handle(UpdateBookCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<BookResponseDto>> Handle(UpdateBookCommand command, CancellationToken cancellationToken)
     {
         var book = await _bookRepository.GetBookByIdAsync(command.UudateBookDto.Id);
         if (book == null)
@@ -24,6 +26,15 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand,string
         
         _mapper.Map(command.UudateBookDto, book);
         await _bookRepository.UpdateBookAsync(book);
-        return "Book Updated Sucessfully";
+        var result = _mapper.Map<BookResponseDto>(book);
+
+        var response = ApiResponseModel<BookResponseDto>
+            .SuccessResponse(
+                result,
+                "Book updated successfully",
+                200
+            );
+
+        return response;
     }
 }

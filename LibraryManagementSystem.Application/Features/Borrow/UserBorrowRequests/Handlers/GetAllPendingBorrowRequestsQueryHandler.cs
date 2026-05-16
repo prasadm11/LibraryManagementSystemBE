@@ -3,10 +3,11 @@ using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Com
 using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class GetAllPendingBorrowRequestsQueryHandler : IRequestHandler<GetAllPendingBorrowRequestsQuery, List<GetAllPendingBorrowRequestsResponseDto>>
+public class GetAllPendingBorrowRequestsQueryHandler : IRequestHandler<GetAllPendingBorrowRequestsQuery, ApiResponseModel<List<GetAllPendingBorrowRequestsResponseDto>>>
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IMapper _mapper;
@@ -17,14 +18,21 @@ public class GetAllPendingBorrowRequestsQueryHandler : IRequestHandler<GetAllPen
         _mapper = mapper;
     }
 
-    public async Task<List<GetAllPendingBorrowRequestsResponseDto>> Handle(GetAllPendingBorrowRequestsQuery request,
+    public async Task<ApiResponseModel<List<GetAllPendingBorrowRequestsResponseDto>>> Handle(GetAllPendingBorrowRequestsQuery request,
         CancellationToken cancellationToken)
     {
 
         var result = await _borrowRequestRepository.GetPendingRequestsAsync();
         
-        var response = _mapper.Map<List<GetAllPendingBorrowRequestsResponseDto>>(result);
-        
+        var resultDto = _mapper.Map<List<GetAllPendingBorrowRequestsResponseDto>>(result);
+
+        var response = ApiResponseModel<List<GetAllPendingBorrowRequestsResponseDto>>
+            .SuccessResponse(
+                resultDto,
+                "Pending borrow requests fetched successfully",
+                200
+            );
+
         return response;
 
     }

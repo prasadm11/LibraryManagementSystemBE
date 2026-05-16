@@ -1,11 +1,12 @@
 using AutoMapper;
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.DTOs;
 
-public class GetUserBorrowHistoryHandler : IRequestHandler<GetUserBorrowHistoryQuery, List<GetUserBorrowHistoryResponseDto>>
+public class GetUserBorrowHistoryHandler : IRequestHandler<GetUserBorrowHistoryQuery, ApiResponseModel<List<GetUserBorrowHistoryResponseDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IBorrowRepository _borrowRepository;
@@ -18,7 +19,7 @@ public class GetUserBorrowHistoryHandler : IRequestHandler<GetUserBorrowHistoryQ
         _userRepository = userRepository;
     }
 
-    public async Task<List<GetUserBorrowHistoryResponseDto>> Handle(GetUserBorrowHistoryQuery command,
+    public async Task<ApiResponseModel<List<GetUserBorrowHistoryResponseDto>>> Handle(GetUserBorrowHistoryQuery command,
         CancellationToken cancellationToken)
     {
         var request = command.GetUserBorrowHistoryRequestDto;
@@ -31,7 +32,12 @@ public class GetUserBorrowHistoryHandler : IRequestHandler<GetUserBorrowHistoryQ
         
         var records = await _borrowRepository.GetByUserIdAsync(request.UserId);
         
-        var response = _mapper.Map<List<GetUserBorrowHistoryResponseDto>>(records);
+        var result = _mapper.Map<List<GetUserBorrowHistoryResponseDto>>(records);
+
+        var response = ApiResponseModel<List<GetUserBorrowHistoryResponseDto>>.SuccessResponse(
+            result,
+            "User borrow history fetched successfully"
+            ,200);
         return response;
         
     }

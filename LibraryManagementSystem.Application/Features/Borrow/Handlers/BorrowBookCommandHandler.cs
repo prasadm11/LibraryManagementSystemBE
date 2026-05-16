@@ -1,4 +1,5 @@
 using AutoMapper;
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, BorrowBookResponseDto>
+public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, ApiResponseModel<BorrowBookResponseDto>>
 {
     private readonly IMapper _mapper;
     private readonly IBookRepository _bookRepository;
@@ -22,7 +23,7 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, Borro
         _userRepository = userRepository;
     }
 
-    public async Task<BorrowBookResponseDto> Handle(BorrowBookCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<BorrowBookResponseDto>> Handle(BorrowBookCommand command, CancellationToken cancellationToken)
     {
         var request = command.BorrowBookRequestDto;
         
@@ -62,8 +63,13 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, Borro
         await _borrowRepository.AddAsync(borrow);
         await _bookRepository.UpdateBookAsync(book);
         
-        var response = _mapper.Map<BorrowBookResponseDto>(borrow);
-        response.Message = "Book borrowed successfully";
+        var result = _mapper.Map<BorrowBookResponseDto>(borrow);
+        result.Message = "Book borrowed successfully";
+
+        var response = ApiResponseModel<BorrowBookResponseDto>.SuccessResponse(
+            result,
+            "Book borrowed successfully",
+            200);
         
         return response;
     }

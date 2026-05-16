@@ -11,11 +11,8 @@ public class NotificationController : ControllerBase
     private readonly IMediator _mediator;
 
     public NotificationController(IMediator mediator)
-
     {
-
         _mediator = mediator;
-
     }
 
     [HttpGet]
@@ -26,15 +23,9 @@ public class NotificationController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> MarkAsRead(int id)
-
+    public async Task<IActionResult> MarkAsRead(int userId)
     {
-
-        var result = await _mediator.Send(
-
-            new MarkNotificationAsReadCommand(id));
-
+        var result = await _mediator.Send(new MarkNotificationAsReadCommand(userId));
         return Ok(result);
-
     }
 }

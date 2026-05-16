@@ -3,10 +3,11 @@ using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class PayFineCommandHandler : IRequestHandler<PayFineCommand, PayFineResponseDto>
+public class PayFineCommandHandler : IRequestHandler<PayFineCommand, ApiResponseModel<PayFineResponseDto>>
 {
     private readonly IMapper _mapper;
     private readonly IBorrowRepository _borrowRepository;
@@ -17,7 +18,7 @@ public class PayFineCommandHandler : IRequestHandler<PayFineCommand, PayFineResp
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<PayFineResponseDto> Handle(PayFineCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<PayFineResponseDto>> Handle(PayFineCommand command, CancellationToken cancellationToken)
     {
         var request = command.PayFineRequestDto;
         
@@ -43,13 +44,21 @@ public class PayFineCommandHandler : IRequestHandler<PayFineCommand, PayFineResp
         //save changes to paid
         await _borrowRepository.UpdateAsync(borrow);
 
-        var response = new PayFineResponseDto()
+        var result = new PayFineResponseDto()
         {
             BorrowId = borrow.Id,
             FineAmount = borrow.FineAmount,
             FinePaid = borrow.FinePaid,
             Message = "Fine paid successfully"
         };
+
+        var response = ApiResponseModel<PayFineResponseDto>
+            .SuccessResponse(
+                result,
+                "Fine paid successfully",
+                200
+            );
+
         return response;
 
     }

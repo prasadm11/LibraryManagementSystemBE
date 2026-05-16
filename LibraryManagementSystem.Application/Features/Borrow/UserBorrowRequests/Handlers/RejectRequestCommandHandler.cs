@@ -3,10 +3,11 @@ using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTO
 using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
-public class RejectRequestCommandHandler  : IRequestHandler<RejectRequestCommand, ApproveRequestResponseDto>
+public class RejectRequestCommandHandler  : IRequestHandler<RejectRequestCommand, ApiResponseModel<ApproveRequestResponseDto>>
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
 
@@ -15,7 +16,7 @@ public class RejectRequestCommandHandler  : IRequestHandler<RejectRequestCommand
         _borrowRequestRepository = borrowRequestRepository;
     }
 
-    public async Task<ApproveRequestResponseDto> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<ApproveRequestResponseDto>> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
     {
         var request = await _borrowRequestRepository.GetByIdAsync(command.id);
         
@@ -32,10 +33,18 @@ public class RejectRequestCommandHandler  : IRequestHandler<RejectRequestCommand
         
         await _borrowRequestRepository.UpdateAsync(request);
 
-        var response = new ApproveRequestResponseDto
+        var result = new ApproveRequestResponseDto
         {
             Message = "Request rejected successfully"
         };
+
+        var response = ApiResponseModel<ApproveRequestResponseDto>
+            .SuccessResponse(
+                result,
+                "Request rejected successfully",
+                200
+            );
+
         return response;
     }
 }

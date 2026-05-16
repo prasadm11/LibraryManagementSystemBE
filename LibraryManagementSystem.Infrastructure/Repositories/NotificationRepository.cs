@@ -43,20 +43,17 @@ public class NotificationRepository : INotificationRepository
 
     }
 
-    public async Task MarkAsReadAsync(int notificationId)
+    public async Task MarkAsReadAsync(int userId)
 
     {
 
-        var notification = await _dbContext.Notifications
+        var notifications = await _dbContext.Notifications.Where(x => x.UserId == userId && !x.IsRead).ToListAsync();
 
-            .FirstOrDefaultAsync(x => x.Id == notificationId);
-
-        if (notification == null)
-
-            throw new Exception("Notification not found");
-
-        notification.IsRead = true;
-
+        foreach (var notification in notifications)
+        {
+            notification.IsRead = true;
+        }
+        
         await _dbContext.SaveChangesAsync();
 
     }

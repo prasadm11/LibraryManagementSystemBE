@@ -1,4 +1,5 @@
 using AutoMapper;
+using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.Borrow.Commands;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Core.Enums;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
-public class GetBorrowSummaryQueryHandler : IRequestHandler<GetBorrowSummaryQuery , BorrowSummaryResponseDto>
+public class GetBorrowSummaryQueryHandler : IRequestHandler<GetBorrowSummaryQuery , ApiResponseModel<BorrowSummaryResponseDto>>
 {
     private readonly IMapper _mapper;
     private readonly IBorrowRepository _borrowRepository;
@@ -18,7 +19,7 @@ public class GetBorrowSummaryQueryHandler : IRequestHandler<GetBorrowSummaryQuer
         _borrowRepository = borrowRepository;
     }
 
-    public async Task<BorrowSummaryResponseDto> Handle(GetBorrowSummaryQuery request,
+    public async Task<ApiResponseModel<BorrowSummaryResponseDto>> Handle(GetBorrowSummaryQuery request,
         CancellationToken cancellationToken)
     {
         var records =await _borrowRepository.GetAllAsync();
@@ -39,7 +40,12 @@ public class GetBorrowSummaryQueryHandler : IRequestHandler<GetBorrowSummaryQuer
             TotalFineCollected = records.Sum(x => x.FineAmount)
         };
 
-        var response = _mapper.Map<BorrowSummaryResponseDto>(summary);
+        var result = _mapper.Map<BorrowSummaryResponseDto>(summary);
+        
+        var response = ApiResponseModel<BorrowSummaryResponseDto>.SuccessResponse(
+            result,
+            "BorrowSummary fetched successfully",
+            200);
         
         return response;
     }

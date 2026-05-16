@@ -2,10 +2,11 @@ using LibraryManagementSystem.Application.Features.BookRating.Commands;
 using LibraryManagementSystem.Application.Features.BookRating.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
+using LibraryManagementSystem.Application.Common.Models;
 
 namespace LibraryManagementSystem.Application.Features.BookRating.Handlers;
 
-public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, List<GetBookRatingsResponseDto>>
+public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, ApiResponseModel<List<GetBookRatingsResponseDto>>>
 {
     private readonly IBookRatingRepository _bookRatingRepository;
     private readonly IUserRepository _userRepository;
@@ -16,7 +17,7 @@ public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, Li
         _userRepository = userRepository;
     }
     
-    public async Task<List<GetBookRatingsResponseDto>> Handle(GetBookRatingsQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponseModel<List<GetBookRatingsResponseDto>>> Handle(GetBookRatingsQuery request, CancellationToken cancellationToken)
     {
         var ratings = await _bookRatingRepository.GetBookRatings(request.BookId);
         var result = new List<GetBookRatingsResponseDto>();
@@ -32,6 +33,13 @@ public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, Li
                 CreatedAt = rating.CreatedAt
             });
         }
-        return result;
+        var response = ApiResponseModel<List<GetBookRatingsResponseDto>>
+            .SuccessResponse(
+                result,
+                "Book ratings fetched successfully",
+                200
+            );
+
+        return response;
     }
 }

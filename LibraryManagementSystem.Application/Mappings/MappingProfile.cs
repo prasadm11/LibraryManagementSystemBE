@@ -14,6 +14,14 @@ public class MappingProfile : Profile
         CreateMap<User, GetAllUsersResponseDto>();
         CreateMap<CreateUserDto, User>();
         CreateMap<User, GetUserByIdDto>();
+        CreateMap<User, CreateUserResponseDto>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<User, DeleteUserResponseDto>()
+            .ForMember(dest => dest.UserId,
+                opt => opt.MapFrom(src => src.Id));
+        CreateMap<User, UpdateUserResponseDto>()
+            .ForMember(dest => dest.UserId,
+                opt => opt.MapFrom(src => src.Id));
 
         //Books
         CreateMap<Book, BookResponseDto>();
