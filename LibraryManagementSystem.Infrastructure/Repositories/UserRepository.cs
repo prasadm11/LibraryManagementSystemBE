@@ -47,7 +47,7 @@ public class UserRepository : IUserRepository
 
     public async Task<List<User>> GetAllAdminsAsync()
     {
-        var response = await _dbContext.Users.Where(x => x.Role == "Admin" && !x.IsActive).ToListAsync();
+        var response = await _dbContext.Users.Where(x => x.Role == "Admin" && x.IsActive).ToListAsync();
         return response;
     }
 }
