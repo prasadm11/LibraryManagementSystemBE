@@ -25,7 +25,7 @@ public class BookRatingController : ControllerBase
     public async Task<IActionResult> RateBook(RateBookDto rateBookDto)
     {
         var result = await _mediator.Send(new RateBookCommand(rateBookDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
     
     [HttpGet]

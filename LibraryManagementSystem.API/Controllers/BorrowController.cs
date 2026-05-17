@@ -21,14 +21,14 @@ public class BorrowController : ControllerBase
     public async Task<IActionResult> BorrowBook([FromBody] BorrowBookRequestDto borrowBookRequestDto)
     {
         var result = await _mediator.Send(new BorrowBookCommand(borrowBookRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpPost]
     public async Task<IActionResult> ReturnBook([FromBody] ReturnBookRequestDto returnBookRequestDto)
     {
         var result = await _mediator.Send(new ReturnBookCommand(returnBookRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpGet]
@@ -56,7 +56,7 @@ public class BorrowController : ControllerBase
     public async Task<IActionResult> RenewBook(RenewBookRequestDto renewBookRequestDto)
     {
         var result = await _mediator.Send(new RenewBookCommand(renewBookRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpGet]
@@ -85,7 +85,7 @@ public class BorrowController : ControllerBase
     public async Task<IActionResult> PayFine([FromBody] PayFineRequestDto payFineRequestDto)
     {
         var result = await _mediator.Send(new PayFineCommand(payFineRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpGet]

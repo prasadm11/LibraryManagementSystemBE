@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LibraryManagementSystem.API.Controllers;
 
 [ApiController]
-[Authorize(Roles = "Admin , User")]
+[Authorize(Roles = "Admin,User")]
 [Route("api/[controller]/[action]")]
 public class UserController : ControllerBase
 {
@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
     {
         var result = await _mediator.Send(new CreateUserCommand(createUserDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpGet("{id}")]
@@ -42,7 +42,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> DeleteUser(int id)
     {
         var result = await _mediator.Send(new DeleteUserCommand(id));
-        return Ok(new { Message = result });
+        return StatusCode(result.StatusCode,result);
     }
     
 
@@ -50,6 +50,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto updateUserDto)
     {
         var result = await _mediator.Send(new UpdateUserCommand(updateUserDto));
-        return Ok(new { Message = result });
+        return StatusCode(result.StatusCode,result);
     }
 }

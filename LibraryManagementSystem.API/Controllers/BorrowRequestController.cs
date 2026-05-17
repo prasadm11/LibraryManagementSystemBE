@@ -22,7 +22,7 @@ public class BorrowRequestController : ControllerBase
     public async Task<IActionResult> CreateBorrowRequest(CreateBorrowRequestDto createBorrowRequestDto)
     {
         var result = await _mediator.Send(new CreateBorrowRequestCommand(createBorrowRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 
     [HttpGet]
@@ -36,14 +36,14 @@ public class BorrowRequestController : ControllerBase
     public async Task<IActionResult> ApproveRequest(int id)
     {
         var result = await _mediator.Send(new ApproveRequestCommand(id));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
     
     [HttpPost]
     public async Task<IActionResult> RejectRequest([FromQuery] int id)
     {
         var result = await _mediator.Send(new RejectRequestCommand(id));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
     
     //RETURN FLOW
@@ -51,7 +51,7 @@ public class BorrowRequestController : ControllerBase
     public async Task<IActionResult> CreateReturnBookRequest([FromBody] CreateReturnBookRequestDto createReturnBookRequestDto)
     {
         var result = await _mediator.Send(new CreateReturnBookRequestCommand(createReturnBookRequestDto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
     
     //RENEW 
@@ -59,6 +59,6 @@ public class BorrowRequestController : ControllerBase
     public async Task<IActionResult> CreateRenewBookRequest([FromBody] CreateRenewBookRequestDto dto)
     {
         var result = await _mediator.Send(new CreateRenewBookRequestCommand(dto));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 }

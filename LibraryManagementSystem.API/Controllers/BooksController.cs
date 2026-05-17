@@ -41,7 +41,7 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> AddBook([FromBody] AddBookDto addBookDto)
     {
         var book =await _mediator.Send(new AddBookCommand(addBookDto));
-        return Ok(new { Message = book });
+        return Ok(book);
     }
     
     [HttpPut]
@@ -49,7 +49,7 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> UpdateBook([FromBody] UpdateBookDto updateBookDto)
     {
         var result = await _mediator.Send(new UpdateBookCommand(updateBookDto));
-        return Ok(new { Message = result });
+        return Ok(result);
     }
     
     [HttpDelete("{id}")]
@@ -57,7 +57,7 @@ public class BooksController : ControllerBase
     public async Task<IActionResult> DeleteBook(int id)
     {
         var result = await _mediator.Send(new DeleteBookCommand(id));
-        return Ok(new { Message = result });
+        return Ok(result);
     }
     
 }

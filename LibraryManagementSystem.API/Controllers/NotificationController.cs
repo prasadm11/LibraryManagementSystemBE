@@ -26,6 +26,6 @@ public class NotificationController : ControllerBase
     public async Task<IActionResult> MarkAsRead(int userId)
     {
         var result = await _mediator.Send(new MarkNotificationAsReadCommand(userId));
-        return Ok(result);
+        return StatusCode(result.StatusCode,result);
     }
 }
