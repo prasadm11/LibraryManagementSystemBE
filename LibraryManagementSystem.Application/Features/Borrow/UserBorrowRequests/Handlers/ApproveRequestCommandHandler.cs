@@ -12,14 +12,12 @@ namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests
 
 public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestCommand , ApiResponseModel<ApproveRequestResponseDto>>
 {
-    private readonly IMapper _mapper;
     private readonly IMediator _mediator;
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
 
-    public ApproveRequestCommandHandler(IMapper mapper, IBorrowRequestRepository borrowRequestRepository, IMediator mediator,IBorrowRepository borrowRepository)
+    public ApproveRequestCommandHandler( IBorrowRequestRepository borrowRequestRepository, IMediator mediator,IBorrowRepository borrowRepository)
     {
-        _mapper = mapper;
         _borrowRequestRepository = borrowRequestRepository;
         _mediator = mediator;
         _borrowRepository = borrowRepository;
@@ -30,7 +28,6 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     public async Task<ApiResponseModel<ApproveRequestResponseDto>> Handle(ApproveRequestCommand command, CancellationToken cancellationToken)
     {
         var request = await _borrowRequestRepository.GetByIdAsync(command.id);
-        var borrow = await _borrowRepository.GetByIdAsync(request.BorrowRecordId.Value);
 
         if (request == null)
         {
@@ -41,10 +38,7 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
         {
             throw new InvalidOperationException("Request already processed");
         }
-        if (borrow.FineAmount > 0 && !borrow.FinePaid)
-        {
-            throw new InvalidOperationException("Fine must be paid before approving return");
-        }
+
         //Handle the approve request according to the type like borrow,return,renew
 
         switch (request.Type)
@@ -61,6 +55,16 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
             case BorrowRequestType.Return:
                 if (request.BorrowRecordId == null)
                     throw new KeyNotFoundException("Invalid return request");
+                
+                var borrow = await _borrowRepository.GetByIdAsync(request.BorrowRecordId.Value);
+                if (borrow == null)
+                {
+                    throw new KeyNotFoundException("Borrow record not found");
+                }
+                if (borrow.FineAmount > 0 && !borrow.FinePaid)
+                {
+                    throw new InvalidOperationException("Fine must be paid before approving return");
+                }
                 await _mediator.Send(new ReturnBookCommand(new ReturnBookRequestDto
                 {
                     BorrowId = request.BorrowRecordId.Value,
@@ -71,6 +75,16 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
                 if (request.BorrowRecordId == null)
                 {
                     throw new KeyNotFoundException("Invalid renew request");
+                }
+                
+                var renewBorrow = await _borrowRepository.GetByIdAsync(request.BorrowRecordId.Value);
+                if (renewBorrow == null)
+                {
+                    throw new KeyNotFoundException("Borrow record not found");
+                }
+                if (renewBorrow.FineAmount > 0 && !renewBorrow.FinePaid)
+                {
+                    throw new InvalidOperationException("Fine must be paid before approving renew");
                 }
                 await _mediator.Send(new RenewBookCommand(new RenewBookRequestDto
                 {
