@@ -8,7 +8,7 @@ public class GetBookRatingsResponseDto
     
     public int UserId { get; set; }
     
-    public string? ImageUrl { get; set; }
+    public string? UserProfileImageUrl { get; set; }
 
     public string Username { get; set; }
 

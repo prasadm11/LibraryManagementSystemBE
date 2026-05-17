@@ -30,7 +30,7 @@ public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, Ap
                 Rating = rating.Rating,
                 Review = rating.Review,
                 UserId =  user.Id,
-                ImageUrl = user.ProfileImageUrl,
+                UserProfileImageUrl = user.ProfileImageUrl,
                 Username = user.Username,
                 CreatedAt = rating.CreatedAt
             });
