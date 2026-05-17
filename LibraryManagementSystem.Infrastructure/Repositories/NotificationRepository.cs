@@ -22,7 +22,7 @@ public class NotificationRepository : INotificationRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Notification>> GetByUserIdAsync(int userId)
+    public async Task<List<Notification>> GetUnreadByUserIdAsync(int userId)
     {
         var user = await _userRepository.GetUserByIdAsync(userId);
         if (user == null)
@@ -36,7 +36,7 @@ public class NotificationRepository : INotificationRepository
         return response;
     }
 
-    public async Task MarkAsReadAsync(int userId)
+    public async Task MarkAllAsReadAsync(int userId)
     {
         var user = await _userRepository.GetUserByIdAsync(userId);
         if (user == null)

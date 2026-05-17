@@ -20,12 +20,12 @@ public class MarkNotificationAsReadCommandHandler : IRequestHandler<MarkNotifica
 
     public async Task<ApiResponseModel<string>> Handle(MarkNotificationAsReadCommand request, CancellationToken cancellationToken)
     {
-        var notification = await _notificationRepository.GetByUserIdAsync(request.UserId);
+        var notification = await _notificationRepository.GetUnreadByUserIdAsync(request.UserId);
         if (notification == null)
         {
             return ApiResponseModel<string>.FailureResponse("Notification not found",404);
         }
-        await _notificationRepository.MarkAsReadAsync(request.UserId);
+        await _notificationRepository.MarkAllAsReadAsync(request.UserId);
 
         var response = ApiResponseModel<string>.SuccessResponse(
             "Sucess",

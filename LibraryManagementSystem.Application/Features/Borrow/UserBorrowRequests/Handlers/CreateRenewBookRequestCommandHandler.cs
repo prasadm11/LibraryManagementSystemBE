@@ -12,11 +12,17 @@ public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewB
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationRepository _notificationRepository;
+    private readonly IBookRepository _bookRepository;
 
-    public CreateRenewBookRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository, IBorrowRepository borrowRepository)
+    public CreateRenewBookRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository, IBorrowRepository borrowRepository, IUserRepository userRepository, INotificationRepository notificationRepository, IBookRepository bookRepository)
     {
         _borrowRequestRepository = borrowRequestRepository;
         _borrowRepository = borrowRepository;
+        _userRepository = userRepository;
+        _notificationRepository = notificationRepository;
+        _bookRepository = bookRepository;
     }
 
     public async Task<ApiResponseModel<CreateRenewBookRequestResponseDto>> Handle(CreateRenewBookRequestCommand command, CancellationToken cancellationToken)
@@ -46,6 +52,23 @@ public class CreateRenewBookRequestCommandHandler : IRequestHandler<CreateRenewB
             CreatedAt = DateTime.UtcNow
         };
         await _borrowRequestRepository.AddAsync(request);
+        
+        var admins = await _userRepository.GetAllAdminsAsync();
+        var user = await _userRepository.GetUserByIdAsync(borrow.UserId);
+        var book = await _bookRepository.GetBookByIdAsync(borrow.BookId);
+        
+        foreach (var admin in admins)
+        {
+            await _notificationRepository.AddAsync(new Core.Entities.Notification
+            {
+                UserId = admin.Id,
+                Title = "New Renew Request",
+                Message = $"{user.FirstName} requested renew for '{book.Title}'",
+                Type = "RenewRequest",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            });
+        }
 
         var result = new CreateRenewBookRequestResponseDto
         {

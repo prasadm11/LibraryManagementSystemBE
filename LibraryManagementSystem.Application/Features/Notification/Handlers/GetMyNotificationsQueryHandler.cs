@@ -18,7 +18,7 @@ public class GetMyNotificationsQueryHandler : IRequestHandler<GetMyNotifications
     public async Task<ApiResponseModel<List<NotificationDto>>> Handle(GetMyNotificationsQuery request,
         CancellationToken cancellationToken)
     {
-        var notifications = await _notificationRepository.GetByUserIdAsync(request.userId);
+        var notifications = await _notificationRepository.GetUnreadByUserIdAsync(request.userId);
         
         var result = notifications.Select(x => new NotificationDto
         {

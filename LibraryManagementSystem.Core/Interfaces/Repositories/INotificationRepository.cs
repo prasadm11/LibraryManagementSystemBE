@@ -6,7 +6,7 @@ public interface INotificationRepository
 {
     Task AddAsync(Notification notification);
 
-    Task<List<Notification>> GetByUserIdAsync(int userId);
+    Task<List<Notification>> GetUnreadByUserIdAsync(int userId);
 
-    Task MarkAsReadAsync(int notificationId);
+    Task MarkAllAsReadAsync(int userId);
 }

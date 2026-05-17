@@ -12,11 +12,17 @@ public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateRetur
 {
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly INotificationRepository _notificationRepository;
+    private readonly IBookRepository _bookRepository;
 
-    public CreateReturnBookRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository,IBorrowRepository borrowRepository)
+    public CreateReturnBookRequestCommandHandler(IBorrowRequestRepository borrowRequestRepository,IBorrowRepository borrowRepository, IUserRepository userRepository, INotificationRepository notificationRepository, IBookRepository bookRepository)
     {
         _borrowRequestRepository = borrowRequestRepository;
         _borrowRepository = borrowRepository;
+        _userRepository = userRepository;
+        _notificationRepository = notificationRepository;
+        _bookRepository = bookRepository;
     }
     public async Task<ApiResponseModel<CreateReturnBookRequestResponseDto>> Handle(
         CreateReturnBookRequestCommand command,
@@ -57,6 +63,23 @@ public class CreateReturnBookRequestCommandHandler : IRequestHandler<CreateRetur
         };
 
         await _borrowRequestRepository.AddAsync(result);
+        
+        var admins = await _userRepository.GetAllAdminsAsync();
+        var user = await _userRepository.GetUserByIdAsync(borrow.UserId);
+        var book = await _bookRepository.GetBookByIdAsync(borrow.BookId);
+        
+        foreach (var admin in admins)
+        {
+            await _notificationRepository.AddAsync(new Core.Entities.Notification
+            {
+                UserId = admin.Id,
+                Title = "New Return Request",
+                Message = $"{user.FirstName} requested return for '{book.Title}'",
+                Type = "ReturnRequest",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            });
+        }
         
         var responseDto = new CreateReturnBookRequestResponseDto
         {

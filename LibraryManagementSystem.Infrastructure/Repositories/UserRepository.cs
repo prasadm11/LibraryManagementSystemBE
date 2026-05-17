@@ -44,4 +44,10 @@ public class UserRepository : IUserRepository
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<User>> GetAllAdminsAsync()
+    {
+        var response = await _dbContext.Users.Where(x => x.Role == "Admin" && !x.IsActive).ToListAsync();
+        return response;
+    }
 }
