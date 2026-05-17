@@ -61,7 +61,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:5173",
-                "https://lmspm.netlify.app"
+                "https://lmspm.netlify.app",
+                "https://lmspm2.netlify.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
