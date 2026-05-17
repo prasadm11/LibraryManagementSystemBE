@@ -39,11 +39,11 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
 
         if (request.Status != BorrowRequestStatus.Pending)
         {
-            throw new Exception("Request already processed");
+            throw new InvalidOperationException("Request already processed");
         }
         if (borrow.FineAmount > 0 && !borrow.FinePaid)
         {
-            throw new Exception("Fine must be paid before approving return");
+            throw new InvalidOperationException("Fine must be paid before approving return");
         }
         //Handle the approve request according to the type like borrow,return,renew
 
