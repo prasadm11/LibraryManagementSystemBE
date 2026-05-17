@@ -7,6 +7,7 @@ using LibraryManagementSystem.Core.Enums;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
 using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Core.Entities;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.Handlers;
 
@@ -15,12 +16,18 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
     private readonly IMediator _mediator;
     private readonly IBorrowRequestRepository _borrowRequestRepository;
     private readonly IBorrowRepository _borrowRepository;
+    private readonly INotificationRepository _notificationRepository;
 
-    public ApproveRequestCommandHandler( IBorrowRequestRepository borrowRequestRepository, IMediator mediator,IBorrowRepository borrowRepository)
+    public ApproveRequestCommandHandler(
+        IBorrowRequestRepository borrowRequestRepository,
+        IMediator mediator,
+        IBorrowRepository borrowRepository,
+        INotificationRepository notificationRepository)
     {
         _borrowRequestRepository = borrowRequestRepository;
         _mediator = mediator;
         _borrowRepository = borrowRepository;
+        _notificationRepository = notificationRepository;
         
     }
     
@@ -101,6 +108,16 @@ public class ApproveRequestCommandHandler : IRequestHandler<ApproveRequestComman
         request.ApprovedAt = DateTime.UtcNow;
         
         await _borrowRequestRepository.UpdateAsync(request);
+
+        await _notificationRepository.AddAsync(new Core.Entities.Notification
+        {
+            UserId = request.UserId,
+            Title = "Request Approved",
+            Message = $"Your {request.Type} request has been approved",
+            Type = $"{request.Type}Approved",
+            IsRead = false,
+            CreatedAt = DateTime.UtcNow
+        });
 
         var result = new ApproveRequestResponseDto
         {
