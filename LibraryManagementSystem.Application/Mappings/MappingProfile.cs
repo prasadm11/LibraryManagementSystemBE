@@ -25,7 +25,7 @@ public class MappingProfile : Profile
 
         //Books
         CreateMap<Book, BookResponseDto>();
-        CreateMap<AddBookDto, Book>();
+        CreateMap<AddBookDto, Book>().ReverseMap();
         CreateMap<UpdateBookDto, Book>();
         
         //BorrowBook
