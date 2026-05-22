@@ -8,5 +8,7 @@ public interface IBookRatingRepository
 
     Task<bool> HasUserRatedBook(int userId, int bookId);
 
-    Task<List<BookRating>> GetBookRatings(int bookId);
+    Task<List<BookRating>> GetBookRatings(int bookId, int pageNumber, int pageSize);
+
+    Task<(int TotalRatings, double AverageRating)> GetBookRatingStats(int bookId);
 }

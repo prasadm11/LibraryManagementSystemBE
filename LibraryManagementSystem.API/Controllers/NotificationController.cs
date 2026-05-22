@@ -16,9 +16,9 @@ public class NotificationController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetNotificationsByUserId(int userId)
+    public async Task<IActionResult> GetNotificationsByUserId(int userId,int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new GetMyNotificationsQuery(userId));
+        var result = await _mediator.Send(new GetMyNotificationsQuery(userId,pageNumber,pageSize));
         return Ok(result);
     }
     

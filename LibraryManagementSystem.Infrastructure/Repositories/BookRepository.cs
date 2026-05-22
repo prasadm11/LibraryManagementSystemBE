@@ -12,9 +12,13 @@ public class BookRepository : IBookRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<List<Book>> GetAllBooksAsync()
+    public async Task<List<Book>> GetAllBooksAsync(int pageNumber, int pageSize)
     {
-        var response = await _dbContext.Books.ToListAsync();
+        var response = await _dbContext.Books
+            .AsNoTracking()
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
         return response;
     }
 

@@ -4,4 +4,4 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Book.Commands;
 
-public record GetAllBooksQuery() : IRequest<ApiResponseModel<List<BookResponseDto>>>;
+public record GetAllBooksQuery(int pageNumber, int pageSize) : IRequest<ApiResponseModel<List<BookResponseDto>>>;

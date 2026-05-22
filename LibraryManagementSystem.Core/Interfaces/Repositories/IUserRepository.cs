@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.Core.Interfaces.Repositories;
 
 public interface IUserRepository
 {
-    Task<List<User>> GetAllUsersAsync();
+   Task<List<User>> GetAllUsersAsync(int pageNumber, int pageSize);
     Task AddUserAsync(User user);
     
     Task<User?> GetUserByIdAsync(int id);

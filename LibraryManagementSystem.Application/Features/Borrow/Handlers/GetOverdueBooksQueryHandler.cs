@@ -22,7 +22,7 @@ public class GetOverdueBooksQueryHandler : IRequestHandler<GetOverdueBooksQuery,
     public async Task<ApiResponseModel<List<GetOverdueBooksResponseDto>>> Handle(GetOverdueBooksQuery request,
         CancellationToken cancellationToken)
     {
-        var records = await _borrowRepository.GetOverdueBooksAsync();
+        var records = await _borrowRepository.GetOverdueBooksAsync(request.pageNumber,  request.pageSize);
         var result = _mapper.Map<List<GetOverdueBooksResponseDto>>(records);
         for (int i = 0; i < result.Count; i++)
         {

@@ -30,7 +30,7 @@ public class GetUserBorrowHistoryHandler : IRequestHandler<GetUserBorrowHistoryQ
             throw new KeyNotFoundException($"User with given id {request.UserId} does not exist");
         }
         
-        var records = await _borrowRepository.GetByUserIdAsync(request.UserId);
+        var records = await _borrowRepository.GetByUserIdAsync(request.UserId,command.pageNumber, command.pageSize);
         
         var result = _mapper.Map<List<GetUserBorrowHistoryResponseDto>>(records);
 

@@ -29,9 +29,9 @@ public class BookRatingController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetBookRatings(int bookId)
+    public async Task<IActionResult> GetBookRatings(int bookId,[FromQuery] int pageNumber,[FromQuery] int pageSize)
     {
-        var result = await _mediator.Send(new GetBookRatingsQuery(bookId));
+        var result = await _mediator.Send(new GetBookRatingsQuery(bookId, pageNumber, pageSize));
         return Ok(result);
     }
 }

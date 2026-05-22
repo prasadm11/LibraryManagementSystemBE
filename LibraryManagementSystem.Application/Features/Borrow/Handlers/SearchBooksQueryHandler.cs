@@ -21,7 +21,7 @@ public class SearchBooksQueryHandler : IRequestHandler<SearchBooksQuery , ApiRes
     public async Task<ApiResponseModel<List<BookResponseDto>>> Handle(SearchBooksQuery request, CancellationToken cancellationToken)
     {
         var record = request.SearchBooksRequestDto;
-        var result = await _borrowRepository.SearchBooksAsync(record.Keyword);
+        var result = await _borrowRepository.SearchBooksAsync(record.Keyword,request.pageNumber, request.pageSize);
 
         if (string.IsNullOrWhiteSpace(record.Keyword))
             throw new ArgumentException("Keyword is required");

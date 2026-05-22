@@ -8,7 +8,7 @@ public interface IBorrowRequestRepository
     
     Task<BorrowRecordsUserRequest?> GetByIdAsync(int id);
     //
-    Task<List<BorrowRecordsUserRequest>> GetPendingRequestsAsync();
+    Task<List<BorrowRecordsUserRequest>> GetPendingRequestsAsync(int pageNumber, int pageSize);
     //
     Task UpdateAsync(BorrowRecordsUserRequest request);
 }

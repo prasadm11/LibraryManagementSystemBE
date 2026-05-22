@@ -22,13 +22,13 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, ApiResp
 
     public async Task<ApiResponseModel<List<BookResponseDto>>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
-        var response = await _bookRepository.GetAllBooksAsync();
+        var response = await _bookRepository.GetAllBooksAsync(request.pageNumber, request.pageSize);
         var result = _mapper.Map<List<BookResponseDto>>(response);
         foreach (var bookDto in result)
         {
-            var ratings = await _bookRatingRepository.GetBookRatings(bookDto.Id);
-            bookDto.TotalRatings = ratings.Count;
-            bookDto.AverageRating = ratings.Any() ? Math.Round(ratings.Average(x=>x.Rating), 2) : 0;
+            var ratings = await _bookRatingRepository.GetBookRatingStats(bookDto.Id);
+            bookDto.TotalRatings = ratings.TotalRatings;
+            bookDto.AverageRating = ratings.AverageRating;
         }
         var responseDto = ApiResponseModel<List<BookResponseDto>>
             .SuccessResponse(

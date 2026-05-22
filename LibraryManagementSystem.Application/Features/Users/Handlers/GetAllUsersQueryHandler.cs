@@ -20,7 +20,7 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, ApiResp
 
     public async Task<ApiResponseModel<List<GetAllUsersResponseDto>>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken)
     {
-        var users = await _userRepository.GetAllUsersAsync();
+        var users = await _userRepository.GetAllUsersAsync(query.pageNumber, query.pageSize);
         var result = _mapper.Map<List<GetAllUsersResponseDto>>(users);
         var response = ApiResponseModel<List<GetAllUsersResponseDto> >.SuccessResponse(
             result, 

@@ -4,4 +4,4 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Commands;
 
-public record GetOverdueBooksQuery () : IRequest<ApiResponseModel<List<GetOverdueBooksResponseDto>>>;
+public record GetOverdueBooksQuery (int pageNumber, int pageSize) : IRequest<ApiResponseModel<List<GetOverdueBooksResponseDto>>>;

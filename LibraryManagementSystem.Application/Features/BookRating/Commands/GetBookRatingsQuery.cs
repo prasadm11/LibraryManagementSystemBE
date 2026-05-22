@@ -4,4 +4,4 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.BookRating.Commands;
 
-public record GetBookRatingsQuery(int BookId) : IRequest<ApiResponseModel<List<GetBookRatingsResponseDto>>>;
+public record GetBookRatingsQuery(int BookId,int pageNumber,int pageSize) : IRequest<ApiResponseModel<List<GetBookRatingsResponseDto>>>;

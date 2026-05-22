@@ -34,7 +34,7 @@ public class GetBookbyStatusQueryHandler : IRequestHandler<GetBookbyStatusQuery 
         }
         
         
-        var records = await _borrowRepository.GetByStatusAsync(status);
+        var records = await _borrowRepository.GetByStatusAsync(status,query.pageNumber,query.pageSize);
 
         var result = _mapper.Map<List<GetBookBorrowStatusResponseDto>>(records);
         

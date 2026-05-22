@@ -26,9 +26,9 @@ public class BorrowRequestController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllPendingBorrowRequests()
+    public async Task<IActionResult> GetAllPendingBorrowRequests(int pageNumber, int pageSize)
     {
-        var result =await _mediator.Send(new GetAllPendingBorrowRequestsQuery());
+        var result =await _mediator.Send(new GetAllPendingBorrowRequestsQuery( pageNumber,  pageSize));
         return Ok(result);
     }
 

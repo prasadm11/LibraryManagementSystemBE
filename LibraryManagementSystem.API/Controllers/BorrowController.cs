@@ -32,23 +32,23 @@ public class BorrowController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBooksByStatus([FromQuery] GetBookBorrowStatusRequestDto getBookBorrowStatusRequestDto)
+    public async Task<IActionResult> GetBooksByStatus([FromQuery] GetBookBorrowStatusRequestDto getBookBorrowStatusRequestDto,int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new GetBookbyStatusQuery(getBookBorrowStatusRequestDto));
+        var result = await _mediator.Send(new GetBookbyStatusQuery(getBookBorrowStatusRequestDto, pageNumber,  pageSize));
         return Ok(result);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUserBorrowHistory([FromQuery] GetUserBorrowHistoryRequestDto getUserBorrowHistoryRequestDto)
+    public async Task<IActionResult> GetUserBorrowHistory([FromQuery] GetUserBorrowHistoryRequestDto getUserBorrowHistoryRequestDto,int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new GetUserBorrowHistoryQuery (getUserBorrowHistoryRequestDto));
+        var result = await _mediator.Send(new GetUserBorrowHistoryQuery (getUserBorrowHistoryRequestDto, pageNumber,  pageSize));
         return Ok(result);
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetOverdueBooks()
+    public async Task<IActionResult> GetOverdueBooks(int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new GetOverdueBooksQuery());
+        var result = await _mediator.Send(new GetOverdueBooksQuery( pageNumber,  pageSize));
         return Ok(result);
     }
 
@@ -60,9 +60,9 @@ public class BorrowController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> SearchBooks([FromQuery] SearchBooksRequestDto searchBooksRequestDto)
+    public async Task<IActionResult> SearchBooks([FromQuery] SearchBooksRequestDto searchBooksRequestDto,int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new SearchBooksQuery(searchBooksRequestDto));
+        var result = await _mediator.Send(new SearchBooksQuery(searchBooksRequestDto, pageNumber,  pageSize));
         return Ok(result);
     }
 
@@ -89,9 +89,9 @@ public class BorrowController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDueBookSoon([FromQuery] int days = 2)
+    public async Task<IActionResult> GetDueBookSoon([FromQuery] int days ,int pageNumber, int pageSize)
     {
-        var result = await _mediator.Send(new GetDueSoonBooksQuery(days));
+        var result = await _mediator.Send(new GetDueSoonBooksQuery(days, pageNumber, pageSize));
         return Ok(result);
     }
 }

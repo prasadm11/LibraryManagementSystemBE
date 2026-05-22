@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.Core.Interfaces.Repositories;
 
 public interface IBookRepository
 {
-    Task<List<Book>> GetAllBooksAsync();
+    Task<List<Book>> GetAllBooksAsync(int pageNumber, int pageSize);
     Task<Book> GetBookByIdAsync(int id);
     
     Task AddBookAsync(Book book);

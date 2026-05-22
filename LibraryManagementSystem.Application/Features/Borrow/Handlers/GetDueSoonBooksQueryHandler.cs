@@ -19,7 +19,7 @@ public class GetDueSoonBooksQueryHandler : IRequestHandler<GetDueSoonBooksQuery 
         CancellationToken cancellationToken)
     {
         // 1. Get records from repo
-        var records = await _borrowRepository.GetDueSoonBooksAsync(request.days);
+        var records = await _borrowRepository.GetDueSoonBooksAsync(request.days,request.pageNumber, request.pageSize);
 
         var today = DateTime.UtcNow.Date;
 

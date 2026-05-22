@@ -19,7 +19,7 @@ public class GetBookRatingsQueryHandler: IRequestHandler<GetBookRatingsQuery, Ap
     
     public async Task<ApiResponseModel<List<GetBookRatingsResponseDto>>> Handle(GetBookRatingsQuery request, CancellationToken cancellationToken)
     {
-        var ratings = await _bookRatingRepository.GetBookRatings(request.BookId);
+        var ratings = await _bookRatingRepository.GetBookRatings(request.BookId,request.pageNumber, request.pageSize);
         var result = new List<GetBookRatingsResponseDto>();
 
         foreach (var rating in ratings)

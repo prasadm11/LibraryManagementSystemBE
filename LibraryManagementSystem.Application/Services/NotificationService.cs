@@ -21,7 +21,7 @@ public class NotificationService : INotificationService
 
     public async Task SendOverdueEmails()
     {
-        var overdueBooksResponse = await _mediator.Send(new GetOverdueBooksQuery());
+        var overdueBooksResponse = await _mediator.Send(new GetOverdueBooksQuery(1,int.MaxValue));
         var overdueBooks = overdueBooksResponse.Data;
         foreach (var item in overdueBooks)
         {
@@ -59,7 +59,7 @@ public class NotificationService : INotificationService
     public async Task SendDueSoonEmails()
     {
 
-        var dueSoonBooksResponse = await _mediator.Send(new GetDueSoonBooksQuery(2));
+        var dueSoonBooksResponse = await _mediator.Send(new GetDueSoonBooksQuery(2,1,int.MaxValue));
         var dueSoonBooks = dueSoonBooksResponse.Data;
 
 

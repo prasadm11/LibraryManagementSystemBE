@@ -4,4 +4,4 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Commands;
 
-public record GetDueSoonBooksQuery(int days): IRequest<ApiResponseModel<List<GetDueSoonBooksResponseDto>>>;
+public record GetDueSoonBooksQuery(int days,int pageNumber, int pageSize): IRequest<ApiResponseModel<List<GetDueSoonBooksResponseDto>>>;

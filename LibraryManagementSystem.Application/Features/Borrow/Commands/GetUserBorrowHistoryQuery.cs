@@ -5,4 +5,4 @@ using MediatR;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Commands;
 
-public record GetUserBorrowHistoryQuery (GetUserBorrowHistoryRequestDto GetUserBorrowHistoryRequestDto) : IRequest<ApiResponseModel<List<GetUserBorrowHistoryResponseDto>>>;
+public record GetUserBorrowHistoryQuery (GetUserBorrowHistoryRequestDto GetUserBorrowHistoryRequestDto,int pageNumber, int pageSize) : IRequest<ApiResponseModel<List<GetUserBorrowHistoryResponseDto>>>;

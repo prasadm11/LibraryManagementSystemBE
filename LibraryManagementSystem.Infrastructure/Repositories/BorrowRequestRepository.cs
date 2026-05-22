@@ -22,11 +22,14 @@ public class BorrowRequestRepository : IBorrowRequestRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<BorrowRecordsUserRequest>> GetPendingRequestsAsync()
+    public async Task<List<BorrowRecordsUserRequest>> GetPendingRequestsAsync(int pageNumber, int pageSize)
     {
         //only fetch pending requests 
         var response = await _dbContext.BorrowRecordsUserRequests
+            .AsNoTracking()
             .Where(x => x.Status == BorrowRequestStatus.Pending)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
         return response;
     }

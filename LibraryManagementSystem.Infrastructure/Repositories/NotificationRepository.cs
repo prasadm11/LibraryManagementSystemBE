@@ -22,6 +22,23 @@ public class NotificationRepository : INotificationRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task<List<Notification>> GetUnreadByUserIdAsync(int userId,int pageNumber, int pageSize)
+    {
+        var user = await _userRepository.GetUserByIdAsync(userId);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with given id {userId} does not exist");
+        }
+        var response = await _dbContext.Notifications
+            .AsNoTracking()
+            .Where(x => x.UserId == userId && !x.IsRead)
+            .OrderByDescending(x => x.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return response;
+    }
+    
     public async Task<List<Notification>> GetUnreadByUserIdAsync(int userId)
     {
         var user = await _userRepository.GetUserByIdAsync(userId);
@@ -30,6 +47,7 @@ public class NotificationRepository : INotificationRepository
             throw new KeyNotFoundException($"User with given id {userId} does not exist");
         }
         var response = await _dbContext.Notifications
+            .AsNoTracking()
             .Where(x => x.UserId == userId && !x.IsRead)
             .OrderByDescending(x => x.CreatedAt)
             .ToListAsync();

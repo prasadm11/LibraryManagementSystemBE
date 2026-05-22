@@ -22,7 +22,7 @@ public class GetAllPendingBorrowRequestsQueryHandler : IRequestHandler<GetAllPen
         CancellationToken cancellationToken)
     {
 
-        var result = await _borrowRequestRepository.GetPendingRequestsAsync();
+        var result = await _borrowRequestRepository.GetPendingRequestsAsync(request.pageNumber, request.pageSize);
         
         var resultDto = _mapper.Map<List<GetAllPendingBorrowRequestsResponseDto>>(result);
 

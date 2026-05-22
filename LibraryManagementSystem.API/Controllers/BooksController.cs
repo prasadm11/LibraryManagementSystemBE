@@ -22,9 +22,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllBooks()
+    public async Task<IActionResult> GetAllBooks([FromQuery] int pageNumber,[FromQuery] int pageSize)
     {
-        var response = await _mediator.Send(new GetAllBooksQuery());
+        var response = await _mediator.Send(new GetAllBooksQuery(pageNumber,pageSize));
         return Ok(response);
 
     }

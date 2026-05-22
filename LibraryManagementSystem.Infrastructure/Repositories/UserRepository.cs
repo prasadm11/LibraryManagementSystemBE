@@ -14,9 +14,13 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<User>> GetAllUsersAsync()
+    public async Task<List<User>> GetAllUsersAsync(int pageNumber, int pageSize)
     {
-        var response = await _dbContext.Users.ToListAsync();
+        var response = await _dbContext.Users
+            .AsNoTracking()
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
         return response;
 
     }
