@@ -89,9 +89,10 @@ public class BorrowRepository : IBorrowRepository
         var response = await _dbContext.Books
             .AsNoTracking()
             .Where(x => x.Title.ToLower().Contains(keyword.ToLower()) || 
-                        x.Author.ToLower().Contains(keyword.ToLower()) ||
-                        x.Genre.ToLower().Contains(keyword.ToLower()) ||
-                        x.PublishedYear.ToString().ToLower().Contains(keyword.ToLower())) 
+                        x.Author.ToLower().Contains(keyword.ToLower()) 
+                        // x.Genre.ToLower().Contains(keyword.ToLower()) ||
+                        // x.PublishedYear.ToString().ToLower().Contains(keyword.ToLower())
+                        ) 
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
