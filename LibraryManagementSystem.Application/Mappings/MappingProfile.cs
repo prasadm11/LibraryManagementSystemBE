@@ -77,7 +77,13 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
         
         //
-        CreateMap<BookReservation, GetUserReservationsResponseDto>();
+        CreateMap<BookReservation, GetUserReservationsResponseDto>()
+            .ForMember(dest => dest.ReservationId,
+                opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.BookTitle,
+                opt => opt.MapFrom(src => src.Book.Title))
+            .ForMember(dest => dest.BookImageUrl,
+                opt => opt.MapFrom(src => src.Book.ImageUrl));
         
     }
 

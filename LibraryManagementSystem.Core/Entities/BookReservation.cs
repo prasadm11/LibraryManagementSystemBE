@@ -27,4 +27,6 @@ public class BookReservation
     public bool IsDeleted { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+    
+    public Book Book { get; set; }
 }
