@@ -40,7 +40,10 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
 
         if (book.AvailableCopies > 0)
         {
-            throw new Exception("Book is currently available");
+            return ApiResponseModel<CreateReservationResponseDto>.FailureResponse(
+                "Book is already available",
+                400
+                );
         }
         
         var existingReservations = await _bookReservationRepository.GetUserReservationsAsync(request.UserId,1,int.MaxValue);
