@@ -25,8 +25,8 @@ public class CancelReservationCommandHandler : IRequestHandler<CancelReservation
         }
 
         reservation.IsCancelled = true;
-        reservation.IsDeleted = true;
-        reservation.DeletedAt = DateTime.UtcNow;
+        // reservation.IsDeleted = true;
+        // reservation.DeletedAt = DateTime.UtcNow;
 
         await _bookReservationRepository.DeleteAsync(reservation);
 
