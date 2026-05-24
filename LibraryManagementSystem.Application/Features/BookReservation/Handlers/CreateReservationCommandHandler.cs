@@ -56,7 +56,9 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
         
         if (alreadyReserved)
         {
-            throw new Exception("User already has active reservation for this book");
+            // throw new Exception("User already has active reservation for this book");
+            return ApiResponseModel<CreateReservationResponseDto>
+                .FailureResponse("User already has active reservation for this book", 400);
         }
 
         var reservation = new Core.Entities.BookReservation
