@@ -17,4 +17,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Notification> Notifications { get; set; }
     
     public DbSet<BookRating> BookRatings { get; set; }
+    
+    public DbSet<BookReservation>  BookReservations { get; set; }
 }

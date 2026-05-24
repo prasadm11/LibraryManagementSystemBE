@@ -6,6 +6,8 @@ using LibraryManagementSystem.Core.Interfaces.Repositories;
 // using LibraryManagementSystem.Infrastructure.Repositories;
 using MediatR;
 using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.BookReservation.Commands;
+using LibraryManagementSystem.Application.Features.BookReservation.DTOs;
 
 namespace LibraryManagementSystem.Application.Features.Borrow.Handlers;
 
@@ -13,11 +15,13 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , ApiR
 {
     private readonly IBorrowRepository _borrowRepository;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
-    public ReturnBookCommandHandler(IBorrowRepository borrowRepository, IMapper mapper)
+    public ReturnBookCommandHandler(IBorrowRepository borrowRepository, IMapper mapper, IMediator mediator)
     {
         _borrowRepository = borrowRepository;
         _mapper = mapper;
+        _mediator = mediator;
     }
 
     public async Task<ApiResponseModel<ReturnBookResponseDto>> Handle(ReturnBookCommand command, CancellationToken cancellationToken)
@@ -61,6 +65,14 @@ public class ReturnBookCommandHandler : IRequestHandler<ReturnBookCommand , ApiR
         borrow.Book.AvailableCopies++;
         
         await _borrowRepository.UpdateAsync(borrow);
+        
+        //call the reservation logic
+        await _mediator.Send(new NotifyNextReservationUserCommand(
+                new NotifyNextReservationUserRequestDto
+                {
+                    BookId = borrow.BookId,
+                    BookTitle = borrow.Book.Title
+                }));
         
         var result = _mapper.Map<ReturnBookResponseDto>(borrow);
 

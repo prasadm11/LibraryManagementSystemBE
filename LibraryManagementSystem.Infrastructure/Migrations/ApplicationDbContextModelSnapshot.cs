@@ -98,6 +98,46 @@ namespace LibraryManagementSystem.Infrastructure.Migrations
                     b.ToTable("BookRatings");
                 });
 
+            modelBuilder.Entity("LibraryManagementSystem.Core.Entities.BookReservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFulfilled")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUserNotified")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("ReservedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookReservations");
+                });
+
             modelBuilder.Entity("LibraryManagementSystem.Core.Entities.BorrowRecord", b =>
                 {
                     b.Property<int>("Id")

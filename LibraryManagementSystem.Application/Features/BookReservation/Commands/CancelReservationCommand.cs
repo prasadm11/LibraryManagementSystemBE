@@ -1,0 +1,7 @@
+using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.BookReservation.DTOs;
+using MediatR;
+
+namespace LibraryManagementSystem.Application.Features.BookReservation.Commands;
+
+public record CancelReservationCommand(CancelReservationRequestDto cancelReservationRequestDto):IRequest<ApiResponseModel<CancelReservationResponseDto>>;

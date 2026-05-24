@@ -30,6 +30,7 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IBorrowRequestRepository, BorrowRequestRepository>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddScoped<IBookRatingRepository, BookRatingRepository>();
+        services.AddScoped<IBookReservationRepository, BookReservationRepository>();
         
         // JWT
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

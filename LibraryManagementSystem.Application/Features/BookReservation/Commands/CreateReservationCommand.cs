@@ -1,0 +1,7 @@
+using LibraryManagementSystem.Application.Common.Models;
+using LibraryManagementSystem.Application.Features.BookReservation.DTOs;
+using MediatR;
+
+namespace LibraryManagementSystem.Application.Features.BookReservation.Commands;
+
+public record CreateReservationCommand(CreateReservationRequestDto createReservationRequestDto) : IRequest<ApiResponseModel<CreateReservationResponseDto>>;

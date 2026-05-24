@@ -1,5 +1,6 @@
 using AutoMapper;
 using LibraryManagementSystem.Application.Features.Book.DTOs;
+using LibraryManagementSystem.Application.Features.BookReservation.DTOs;
 using LibraryManagementSystem.Application.Features.Borrow.DTOs;
 using LibraryManagementSystem.Application.Features.Borrow.UserBorrowRequests.DTOs;
 using LibraryManagementSystem.Application.Features.Users.DTOS;
@@ -74,6 +75,9 @@ public class MappingProfile : Profile
         CreateMap<BorrowRecordsUserRequest, GetAllPendingBorrowRequestsResponseDto>()
             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        
+        //
+        CreateMap<BookReservation, GetUserReservationsResponseDto>();
         
     }
 
