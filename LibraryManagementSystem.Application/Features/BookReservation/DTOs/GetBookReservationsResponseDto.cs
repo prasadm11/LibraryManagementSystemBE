@@ -1,4 +1,4 @@
-namespace LibraryManagementSystem.Application.Features.BookReservation.Handlers;
+namespace LibraryManagementSystem.Application.Features.BookReservation.DTOs;
 
 public class GetBookReservationsResponseDto
 {

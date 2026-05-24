@@ -1,6 +1,7 @@
 using AutoMapper;
 using LibraryManagementSystem.Application.Common.Models;
 using LibraryManagementSystem.Application.Features.BookReservation.Commands;
+using LibraryManagementSystem.Application.Features.BookReservation.DTOs;
 using LibraryManagementSystem.Core.Interfaces.Repositories;
 using MediatR;
 
