@@ -13,14 +13,16 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, ApiRe
     private readonly IBookRepository _bookRepository;
     private readonly IBorrowRepository _borrowRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IBookReservationRepository _bookReservationRepository;
 
     public BorrowBookCommandHandler(IMapper mapper, IBookRepository bookRepository, IBorrowRepository borrowRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository, IBookReservationRepository bookReservationRepository)
     {
         _mapper = mapper;
         _bookRepository = bookRepository;
         _borrowRepository = borrowRepository;
         _userRepository = userRepository;
+        _bookReservationRepository = bookReservationRepository;
     }
 
     public async Task<ApiResponseModel<BorrowBookResponseDto>> Handle(BorrowBookCommand command, CancellationToken cancellationToken)
@@ -62,6 +64,18 @@ public class BorrowBookCommandHandler : IRequestHandler<BorrowBookCommand, ApiRe
         //save data
         await _borrowRepository.AddAsync(borrow);
         await _bookRepository.UpdateBookAsync(book);
+        
+        var reservations = await _bookReservationRepository.GetUserReservationsAsync(request.UserId,1,int.MaxValue);
+
+        var reservation = reservations.FirstOrDefault(x=>x.BookId == request.BookId && !x.IsCancelled && !x.IsFulfilled);
+
+        if (reservations != null)
+        {
+            reservation.IsFulfilled = true;
+            await _bookReservationRepository.UpdateAsync(reservation);
+        }
+        
+        
         
         var result = _mapper.Map<BorrowBookResponseDto>(borrow);
         result.Message = "Book borrowed successfully";
