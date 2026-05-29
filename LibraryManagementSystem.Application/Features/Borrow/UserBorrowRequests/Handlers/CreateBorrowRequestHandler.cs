@@ -39,17 +39,29 @@ public class CreateBorrowRequestHandler : IRequestHandler<CreateBorrowRequestCom
         
         if (hasOverdue)
         {
-            throw new Exception("User has overdue books");
+            // throw new Exception("User has overdue books");
+            return ApiResponseModel<CreateBorrowResponseDto>
+                .FailureResponse(
+                    "User has overdue books",
+                    400);
         }
 
         if (hasUnpaidFine)
         {
-            throw new Exception("User has unpaid fines");
+            // throw new Exception("User has unpaid fines");
+            return ApiResponseModel<CreateBorrowResponseDto>
+                .FailureResponse(
+                    "User has unpaid fines",
+                    400);
         }
 
         if (maxLimitReached)
         {
-            throw new Exception("User reached borrow limit");
+            // throw new Exception("User reached borrow limit");
+            return ApiResponseModel<CreateBorrowResponseDto>
+                .FailureResponse(
+                    "User reached borrow limit",
+                    400);
         }
 
         var createBorrowRequest = new BorrowRecordsUserRequest
