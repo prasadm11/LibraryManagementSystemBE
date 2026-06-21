@@ -139,7 +139,7 @@ http Authorization: Bearer <your-jwt-token>
 
 ### Prerequisites
 
-- .NET 8 SDK 
+- .NET 10 SDK 
 - SQL Server
 - Visual Studio 2022 / VS Code
 
